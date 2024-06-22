@@ -10,7 +10,7 @@ function DeleteItem(pizzaID: pizzaIDtype) {
   const dispatch = useDispatch();
   // console.log(pizzaID);
   const handleDelete = () => {
-    const item = dispatch(deleteItem({ pizzaID }));
+    const item = dispatch(deleteItem(pizzaID.pizzaID));
     console.log(item);
   };
   return (

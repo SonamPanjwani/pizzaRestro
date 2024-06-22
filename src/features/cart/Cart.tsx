@@ -3,11 +3,10 @@ import LinkStyle from "../../uiComponents/LinkStyle";
 import ButtonStyle from "../../uiComponents/ButtonStyle";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { clearCart, getCart } from "./cartSlice";
+import { clearCart } from "./cartSlice";
 import CartItem from "./CartItem";
 import EmptyCart from "./EmptyCart";
-import { cartType } from "../../utilities/Types";
-//import { cartType } from "../../utilities/Types";
+
 // const fakeCart: cartType[] = [
 //   {
 //     pizzaID: 12,
@@ -34,9 +33,10 @@ import { cartType } from "../../utilities/Types";
 const Cart: React.FC = () => {
   //const cart = fakeCart; used earlier to see the output
   const username = useSelector((state: RootState) => state.user.username);
-  const cart = useSelector(getCart);
-  const dispatch = useDispatch();
+  const cart = useSelector((state: RootState) => state.cart.cart.flat());
 
+  const dispatch = useDispatch();
+  console.log(cart);
   if (!cart.length) return <EmptyCart />;
 
   return (

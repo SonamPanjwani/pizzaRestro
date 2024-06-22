@@ -1,11 +1,3 @@
-export type cartType = {
-  pizzaID: number;
-  name: string;
-  quantity: number;
-  unitPrice: number;
-  totalPrice: number;
-}[];
-
 export type item = {
   pizzaID: number;
   name: string;
@@ -13,6 +5,15 @@ export type item = {
   unitPrice: number;
   totalPrice: number;
 };
+
+export type cartType = {
+  pizzaID: number;
+  name: string;
+  quantity: number;
+  unitPrice: number;
+  totalPrice: number;
+  item?: item;
+}[];
 
 export type pizzaProp = {
   id: number;

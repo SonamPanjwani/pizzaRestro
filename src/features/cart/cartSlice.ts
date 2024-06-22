@@ -26,17 +26,21 @@ const cartSlice = createSlice({
   reducers: {
     addItem(state, action) {
       //payload =newItem
-      // console.log(state.cart);
+
       state.cart.push(action.payload);
-      console.log(action.payload);
+      // console.log(action.payload);
+      // console.log(state.cart);
+      // console.log(state);
     },
     deleteItem(state, action) {
       //pizza id
-      console.log(state.cart);
-      console.log(action.payload);
+      // console.log(state);
+      // console.log(state.cart);
+      //console.log(action.payload);
       state.cart = state.cart.filter((item) => {
         return item.pizzaID !== action.payload;
       });
+
       console.log(state.cart);
       // console.log(filter);
     },
@@ -97,7 +101,8 @@ export const getTotalPrice = (state: RootState) => {
 
 export const getCart = (state: RootState) => {
   const currentCart = state.cart.cart.flat();
-  // console.log(currentCart);
+  console.log(currentCart);
+
   return currentCart;
 };
 

@@ -4,7 +4,7 @@ import { formatCurrency } from "../../utilities/helperFunctions";
 
 import { cartType, pizzaProp } from "../../utilities/Types";
 import { addItem } from "../cart/cartSlice";
-import DeleteItem from "../cart/DeleteItem";
+//import DeleteItem from "../cart/DeleteItem";
 
 function MenuItem({ pizza }: { pizza: pizzaProp }) {
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ function MenuItem({ pizza }: { pizza: pizzaProp }) {
             <p className="text-lg uppercase mx-3 py-1 font-medium text-slate-900">
               {formatCurrency(pizza.unitPrice)}
             </p>
-            <DeleteItem pizzaID={pizza.id} />
+            {/* <DeleteItem pizzaID={pizza.id} /> */}
             <ButtonStyle type="small" onClick={handleAddToCart}>
               ADD TO CART
             </ButtonStyle>
