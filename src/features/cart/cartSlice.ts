@@ -29,20 +29,21 @@ const cartSlice = createSlice({
 
       state.cart.push(action.payload);
       // console.log(action.payload);
-      // console.log(state.cart);
+
       // console.log(state);
     },
     deleteItem(state, action) {
       //pizza id
       // console.log(state);
       // console.log(state.cart);
-      //console.log(action.payload);
-      state.cart = state.cart.filter((item) => {
+      console.log(action.payload);
+      const currState = state.cart.flat();
+
+      console.log(currState);
+      state.cart = currState.filter((item) => {
         return item.pizzaID !== action.payload;
       });
-
       console.log(state.cart);
-      // console.log(filter);
     },
     increaseItemQty(state, action) {
       const item = state.cart.find((item) => {

@@ -2,7 +2,7 @@
 import LinkStyle from "../../uiComponents/LinkStyle";
 import ButtonStyle from "../../uiComponents/ButtonStyle";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState, useAppSelector } from "../../store";
 import { clearCart } from "./cartSlice";
 import CartItem from "./CartItem";
 import EmptyCart from "./EmptyCart";
@@ -33,10 +33,10 @@ import EmptyCart from "./EmptyCart";
 const Cart: React.FC = () => {
   //const cart = fakeCart; used earlier to see the output
   const username = useSelector((state: RootState) => state.user.username);
-  const cart = useSelector((state: RootState) => state.cart.cart.flat());
-
+  //const cart = useSelector((state: RootState) => state.cart.cart.flat());
+  const cart = useAppSelector((state: RootState) => state.cart.cart.flat());
   const dispatch = useDispatch();
-  console.log(cart);
+  //console.log(cart.flat());
   if (!cart.length) return <EmptyCart />;
 
   return (
