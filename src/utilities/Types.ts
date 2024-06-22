@@ -27,10 +27,10 @@ export type pizzaProp = {
 export type orderProp = {
   id: number;
   customer: string;
-  phone: number;
+  phone: number | string;
   address: string;
-  priority: boolean;
-  // estimatedDelivery: Date;
+  priority: boolean | string;
+  estimatedDelivery: Date;
   cart: {
     pizzaID: number;
     name: string;
@@ -48,12 +48,12 @@ export type loaderParams = {
     orderId: number | string;
   };
 };
-export type orderItemProps = {
-  items: {
-    quantity: number;
-    name: string;
-    totalPrice: number;
-  };
-  ingredients: [];
-  isLoadingIngredients: boolean;
-};
+// export type orderItemProps = {
+//   items: {
+//     quantity: number;
+//     name: string;
+//     totalPrice: number;
+//   };
+//   ingredients: [];
+//   isLoadingIngredients: boolean;
+// };

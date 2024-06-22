@@ -1,17 +1,20 @@
 import { useLoaderData } from "react-router-dom";
 import { getOrder } from "../../services/apiRestaurant";
 import {
-  // calcMinutesLeft,
+  calcMinutesLeft,
   formatCurrency,
-  //formatDate,
+  formatDate,
 } from "../../utilities/helperFunctions";
-import { orderProp, loaderParams } from "../../utilities/Types";
+import { orderProp, loaderParams, item } from "../../utilities/Types";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 //import CartItem from "../cart/CartItem";
-//import OrderItem from "./OrderItem";
+import OrderItem from "./OrderItem";
 
 function Order() {
   const order = useLoaderData() as orderProp;
-  //const deliveryIn = calcMinutesLeft(order.estimatedDelivery);
+  const cart = useSelector((state: RootState) => state.cart.cart.flat());
+  const deliveryIn = calcMinutesLeft(order.estimatedDelivery);
 
   return (
     <div className="px-4 py-6 space-y-8">
@@ -30,20 +33,24 @@ function Order() {
             {order.status} Order
           </span>
         </div>
-        {/* <div  className="flex items-center justify-between
-      flex-wrap gap-2 bg-stone-200 px-6 py-5">
+        <div
+          className="flex items-center justify-between
+      flex-wrap gap-2 bg-stone-200 px-6 py-5"
+        >
           <p className="font-medium">
             {deliveryIn >= 0
               ? `Only ${deliveryIn} minutes left`
               : `Order Should have Arrived`}
           </p>
-          <p className="text-xs text-stone-500">( Estimated Delivery : {formatDate(order.estimatedDelivery)})</p>
-        </div> */}
-        {/* <ul className="divide-y divide-stone-200 border-b border-t">
-          {cart.map((item)=>{
-            return <OrderItem item={item} key={item.id}/>
+          <p className="text-xs text-stone-500">
+            ( Estimated Delivery : {formatDate(order.estimatedDelivery)})
+          </p>
+        </div>
+        <ul className="divide-y divide-stone-200 border-b border-t">
+          {cart.map((item: item) => {
+            return <OrderItem order={item} key={item.pizzaID} />;
           })}
-        </ul> */}
+        </ul>
         <div className="space-y-2 bg-stone-200 px-6 py-5">
           <p className="text-sm font-medium text-stone-600">
             Price Pizza:{formatCurrency(order.orderPrice)}

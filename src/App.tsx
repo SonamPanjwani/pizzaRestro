@@ -8,6 +8,7 @@ import CreateOrder, {
 import Order from "./features/order/Order";
 import AppLayout from "./uiComponents/AppLayout";
 import Error from "./uiComponents/Error";
+import ThankYou from "./features/order/ThankYou";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
         element: <Order />,
         //loader ka issue aara hai
         errorElement: <Error />,
+      },
+      {
+        path: "/thankyou",
+        element: <ThankYou />,
       },
     ],
   },

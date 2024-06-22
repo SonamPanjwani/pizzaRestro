@@ -46,7 +46,8 @@ const cartSlice = createSlice({
       console.log(state.cart);
     },
     increaseItemQty(state, action) {
-      const item = state.cart.find((item) => {
+      const currState = state.cart.flat();
+      const item = currState.find((item) => {
         return item.pizzaID === action.payload;
       });
       if (item) {
@@ -55,12 +56,21 @@ const cartSlice = createSlice({
       }
     },
     decreaseItemQty(state, action) {
-      const item = state.cart.find((item) => {
+      const currState = state.cart.flat();
+      const item = currState.find((item) => {
         return item.pizzaID === action.payload;
       });
-      if (item && item.quantity > 1) {
-        item.quantity--;
-        item.totalPrice = item.unitPrice * item.quantity;
+      // if (item && item.quantity > 1) {
+      //   item.quantity--;
+      //   item.totalPrice = item.unitPrice * item.quantity;
+      // } this is working great but another logic if we encounter a 0
+      if (item) {
+        if (item.quantity === 0) {
+          cartSlice.caseReducers.deleteItem(state, action);
+        } else if (item.quantity > 0) {
+          item.quantity--;
+          item.totalPrice = item.unitPrice * item.quantity;
+        }
       }
     },
     clearCart(state) {
@@ -106,5 +116,3 @@ export const getCart = (state: RootState) => {
 
   return currentCart;
 };
-
-//export const getQtyById(id)= (state: RootState) => {};

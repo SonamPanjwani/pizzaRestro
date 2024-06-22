@@ -1,25 +1,30 @@
 import { useDispatch } from "react-redux";
 import ButtonStyle from "../../uiComponents/ButtonStyle";
 import { formatCurrency } from "../../utilities/helperFunctions";
-
-import { cartType, pizzaProp } from "../../utilities/Types";
+import { item, pizzaProp } from "../../utilities/Types";
 import { addItem } from "../cart/cartSlice";
 //import DeleteItem from "../cart/DeleteItem";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 function MenuItem({ pizza }: { pizza: pizzaProp }) {
   const dispatch = useDispatch();
+  const cart = useSelector((state: RootState) => state.cart.cart.flat());
+
+  console.log(cart);
 
   const handleAddToCart = () => {
-    const newItem: cartType = [
-      {
-        pizzaID: pizza.id,
-        name: pizza.name,
-        quantity: 1,
-        unitPrice: pizza.unitPrice,
-        totalPrice: pizza.unitPrice * 1,
-      },
-    ];
+    const newItem: item = {
+      pizzaID: pizza.id,
+      name: pizza.name,
+      quantity: 1,
+      unitPrice: pizza.unitPrice,
+      totalPrice: pizza.unitPrice * 1,
+    };
     console.log(newItem);
+    const qty = newItem.quantity;
+    console.log(qty);
+
     dispatch(addItem(newItem));
   };
 
@@ -44,7 +49,7 @@ function MenuItem({ pizza }: { pizza: pizzaProp }) {
             <p className="text-lg uppercase mx-3 py-1 font-medium text-slate-900">
               {formatCurrency(pizza.unitPrice)}
             </p>
-            {/* <DeleteItem pizzaID={pizza.id} /> */}
+            {/* //<DeleteItem pizzaID={pizza.id} /> */}
             <ButtonStyle type="small" onClick={handleAddToCart}>
               ADD TO CART
             </ButtonStyle>

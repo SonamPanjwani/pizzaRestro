@@ -1,54 +1,36 @@
 //import { useState } from "react";
 
-import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
+import { Form, useNavigation } from "react-router-dom";
 
-import { cartType, orderProp } from "../../utilities/Types";
-import { createOrder } from "../../services/apiRestaurant";
+//import { orderProp } from "../../utilities/Types";
+//import { createOrder } from "../../services/apiRestaurant";
 import ButtonStyle from "../../uiComponents/ButtonStyle";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import EmptyCart from "../cart/EmptyCart";
+import ThankYou from "./ThankYou";
 
-const isValidPhoneNumber = (num: number): boolean => {
-  const str = num.toString();
-  const phoneRegex = /^(\+91[- ]?)?\d{10}$/;
-  return phoneRegex.test(str);
-};
+// const isValidPhoneNumber = (num: number): boolean => {
+//   const str = num.toString();
+//   const phoneRegex = /^(\+91[- ]?)?\d{10}$/;
+//   return phoneRegex.test(str);
+// };
 
-const fakeCart: cartType[] = [
-  {
-    pizzaID: 12,
-    name: "Mediterranean",
-    quantity: 2,
-    unitPrice: 16,
-    totalPrice: 32,
-  },
-  {
-    pizzaID: 6,
-    name: "Vegetable",
-    quantity: 1,
-    unitPrice: 13,
-    totalPrice: 13,
-  },
-  {
-    pizzaID: 11,
-    name: "Spinach & Mushroom",
-    quantity: 1,
-    unitPrice: 15,
-    totalPrice: 15,
-  },
-];
-type errorType = {
-  phone?: string;
-};
+// type errorType = {
+//   phone?: string;
+// };
 
 function CreateOrder() {
-  const cart = fakeCart;
+  const cart = useSelector((state: RootState) => state.cart.cart.flat());
+  console.log(cart);
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
 
-  const formErrors = useActionData() as errorType;
+  //const formErrors = useActionData() as errorType;
 
   const username = useSelector((state: RootState) => state.user.username);
+
+  if (!cart.length) return <EmptyCart />;
 
   return (
     <>
@@ -80,11 +62,11 @@ function CreateOrder() {
                 name="Phone"
                 required
               />
-              {formErrors?.phone && (
+              {/* {formErrors?.phone && (
                 <p className="text-xs mt-2 text-red-700 p-2 rounded-md">
                   {formErrors.phone}
                 </p>
-              )}
+              )} */}
             </div>
           </div>
 
@@ -117,8 +99,8 @@ function CreateOrder() {
             </label>
           </div>
           <div>
-            <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-            <ButtonStyle disabled={isSubmitting} type="primary">
+            {/* <input type="hidden" name="cart" value={JSON.stringify(cart)} /> */}
+            <ButtonStyle disabled={isSubmitting} type="primary" to="/thankyou">
               {isSubmitting ? "Placing order ..." : "Order Now!!"}
             </ButtonStyle>
           </div>
@@ -131,29 +113,40 @@ function CreateOrder() {
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
   console.log(formData);
-  const data = Object.fromEntries(formData);
+  const data = Object.fromEntries(formData.entries()) as {
+    customer: string;
+    phone: string;
+    address: string;
+    cart: string;
+    priority: string;
+  };
   console.log(data);
   const order: orderProp = {
-    ...data,
-    cart: JSON.parse(data.cart),
-    priority: data.priority === "on",
+    id: Math.floor(Math.random() * 1000),
+    customer: data.customer,
+    phone: data.phone,
+    address: data.address,
+    priority: data.priority,
+    cart: [{}],
   };
-  console.log(order);
 
-  const errors: errorType = {};
-  if (!isValidPhoneNumber(order.phone)) {
-    errors.phone =
-      "Please give us your correct phone number . We might need it to connect with you.";
-  }
+  //   //console.log(order);
 
-  if (Object.keys(errors).length > 0) {
-    return errors;
-  }
-  // if all good then only create new order
+  //   // const errors: errorType = {};
+  //   // if (!isValidPhoneNumber(order.phone)) {
+  //   //   errors.phone =
+  //   //     "Please give us your correct phone number . We might need it to connect with you.";
+  //   // }
 
-  const newOrder = await createOrder(order);
-  console.log(newOrder);
-  return redirect(`/order/${newOrder.id}`);
+  //   // if (Object.keys(errors).length > 0) {
+  //   //   return errors;
+  //   // }
+  //   // if all good then only create new order
+
+  //   // const newOrder = await createOrder(order);
+  //   // console.log(newOrder);
+  //return redirect(`/order/${newOrder.id}`);
+  // }
+  return null;
 }
-
 export default CreateOrder;
