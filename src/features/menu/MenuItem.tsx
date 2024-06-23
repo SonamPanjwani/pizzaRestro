@@ -30,41 +30,45 @@ function MenuItem({ pizza }: { pizza: pizzaProp }) {
 
   return (
     <>
-      <li className="flex gap-6 py-2">
-        <img
-          src={pizza.imageUrl}
-          alt={pizza.name}
-          className={`
+      <div className=" w-auto">
+        <li className="flex gap-6 sm:gap-3  py-2">
+          <img
+            src={pizza.imageUrl}
+            alt={pizza.name}
+            className={`
           h-24 ${pizza.soldOut ? "opacity-70 grayscale" : " "}`}
-        />
-        <div className="flex flex-col grow pt-0.5">
-          <p className="font-semibold text-xl text-slate-950">{pizza.name}</p>
-          <p className="text-sm  italic capitalize text-slate-900">
-            {pizza.ingredients.join(",")}
-          </p>
-        </div>
+          />
+          <div className="flex flex-col grow pt-0.5">
+            <p className="font-semibold text-base md:text-xl text-slate-950">
+              {pizza.name}
+            </p>
+            <p className="text-xs sm:text-sm italic capitalize text-slate-900">
+              {pizza.ingredients.join(",")}
+            </p>
+          </div>
 
-        {!pizza.soldOut ? (
-          <div className="mt-auto flex gap-2 items-center justify-between">
-            <p className="text-lg uppercase mx-3 py-1 font-medium text-slate-900">
-              {formatCurrency(pizza.unitPrice)}
-            </p>
-            {/* //<DeleteItem pizzaID={pizza.id} /> */}
-            <ButtonStyle type="small" onClick={handleAddToCart}>
-              ADD TO CART
-            </ButtonStyle>
-          </div>
-        ) : (
-          <div className="mt-auto flex items-center justify-between">
-            <p className="mx-2 text-slate-200  bg-red-600 rounded-lg px-2 my-1 py-1 text-md">
-              Sold Out
-            </p>
-            <ButtonStyle type="notActive" disabled={true}>
-              ADD TO CART
-            </ButtonStyle>
-          </div>
-        )}
-      </li>
+          {!pizza.soldOut ? (
+            <div className="mt-auto flex gap-2 items-center justify-evenly sm:justify-between">
+              <p className="text-base sm:text-lg uppercase mx-3 py-1 font-medium text-slate-900">
+                {formatCurrency(pizza.unitPrice)}
+              </p>
+              {/* //<DeleteItem pizzaID={pizza.id} /> */}
+              <ButtonStyle type="small" onClick={handleAddToCart}>
+                ADD TO CART
+              </ButtonStyle>
+            </div>
+          ) : (
+            <div className="mt-auto flex items-center justify-between">
+              <p className="mx-2 text-slate-200  bg-red-600 rounded-lg px-2 my-1 py-1 text-md">
+                Sold Out
+              </p>
+              <ButtonStyle type="notActive" disabled={true}>
+                ADD TO CART
+              </ButtonStyle>
+            </div>
+          )}
+        </li>
+      </div>
     </>
   );
 }
