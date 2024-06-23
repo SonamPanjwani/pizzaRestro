@@ -8,7 +8,7 @@ import ButtonStyle from "../../uiComponents/ButtonStyle";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import EmptyCart from "../cart/EmptyCart";
-import ThankYou from "./ThankYou";
+//import ThankYou from "./ThankYou";
 
 // const isValidPhoneNumber = (num: number): boolean => {
 //   const str = num.toString();
@@ -121,14 +121,14 @@ export async function action({ request }: { request: Request }) {
     priority: string;
   };
   console.log(data);
-  const order: orderProp = {
-    id: Math.floor(Math.random() * 1000),
-    customer: data.customer,
-    phone: data.phone,
-    address: data.address,
-    priority: data.priority,
-    cart: [{}],
-  };
+  // const order: orderProp = {
+  //   id: Math.floor(Math.random() * 1000),
+  //   customer: data.customer,
+  //   phone: data.phone,
+  //   address: data.address,
+  //   priority: data.priority,
+  //   cart: [{}],
+  // };
 
   //   //console.log(order);
 

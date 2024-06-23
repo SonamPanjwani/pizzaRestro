@@ -5,15 +5,15 @@ import {
   formatCurrency,
   formatDate,
 } from "../../utilities/helperFunctions";
-import { orderProp, loaderParams, item } from "../../utilities/Types";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { orderProp, loaderParams } from "../../utilities/Types";
+//import { useSelector } from "react-redux";
+//import { RootState } from "../../store";
 //import CartItem from "../cart/CartItem";
-import OrderItem from "./OrderItem";
+//import OrderItem from "./OrderItem";
 
 function Order() {
   const order = useLoaderData() as orderProp;
-  const cart = useSelector((state: RootState) => state.cart.cart.flat());
+  //const cart = useSelector((state: RootState) => state.cart.cart.flat());
   const deliveryIn = calcMinutesLeft(order.estimatedDelivery);
 
   return (
@@ -46,11 +46,7 @@ function Order() {
             ( Estimated Delivery : {formatDate(order.estimatedDelivery)})
           </p>
         </div>
-        <ul className="divide-y divide-stone-200 border-b border-t">
-          {cart.map((item: item) => {
-            return <OrderItem order={item} key={item.pizzaID} />;
-          })}
-        </ul>
+        <ul className="divide-y divide-stone-200 border-b border-t"></ul>
         <div className="space-y-2 bg-stone-200 px-6 py-5">
           <p className="text-sm font-medium text-stone-600">
             Price Pizza:{formatCurrency(order.orderPrice)}
