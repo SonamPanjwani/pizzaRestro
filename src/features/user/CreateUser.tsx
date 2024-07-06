@@ -11,8 +11,10 @@ function CreateUser() {
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!userName) return;
+
     dispatch(updateName(userName));
-    navigate("/menu");
+
+    navigate("/login");
   }
 
   return (

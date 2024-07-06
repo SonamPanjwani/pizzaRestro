@@ -2,24 +2,31 @@ import { useDispatch } from "react-redux";
 import ButtonStyle from "../../uiComponents/ButtonStyle";
 import { formatCurrency } from "../../utilities/helperFunctions";
 import { item, pizzaProp } from "../../utilities/Types";
-import { addItem } from "../cart/cartSlice";
-//import DeleteItem from "../cart/DeleteItem";
+import { addItem, getElementById } from "../cart/cartSlice";
+import DeleteItem from "../cart/DeleteItem";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import UpdateItem from "../cart/UpdateItem";
 
 function MenuItem({ pizza }: { pizza: pizzaProp }) {
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart.cart.flat());
 
   console.log(cart);
+  const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+  const currentQuantity = useSelector((state: RootState) =>
+    getElementById(state, id)
+  );
+  console.log(currentQuantity);
+  const isInCart = currentQuantity > 0;
 
   const handleAddToCart = () => {
     const newItem: item = {
-      pizzaID: pizza.id,
-      name: pizza.name,
+      pizzaID: id,
+      name,
       quantity: 1,
-      unitPrice: pizza.unitPrice,
-      totalPrice: pizza.unitPrice * 1,
+      unitPrice,
+      totalPrice: unitPrice * 1,
     };
     console.log(newItem);
     const qty = newItem.quantity;
@@ -30,32 +37,38 @@ function MenuItem({ pizza }: { pizza: pizzaProp }) {
 
   return (
     <>
-      <div className=" w-auto">
-        <li className="flex gap-6 sm:gap-3  py-2">
+      <div className=" w-auto flex justigy-between">
+        <li className="flex gap-6 sm:gap-3 h-auto w-full py-2">
           <img
-            src={pizza.imageUrl}
-            alt={pizza.name}
+            src={imageUrl}
+            alt={name}
             className={`
-          h-24 ${pizza.soldOut ? "opacity-70 grayscale" : " "}`}
+          h-24 ${soldOut ? "opacity-70 grayscale" : " "}`}
           />
           <div className="flex flex-col grow pt-0.5">
             <p className="font-semibold text-base md:text-xl text-slate-950">
-              {pizza.name}
+              {name}
             </p>
             <p className="text-xs sm:text-sm italic capitalize text-slate-900">
-              {pizza.ingredients.join(",")}
+              {ingredients.join(",")}
             </p>
           </div>
 
-          {!pizza.soldOut ? (
+          {!soldOut ? (
             <div className="mt-auto flex gap-2 items-center justify-evenly sm:justify-between">
               <p className="text-base sm:text-lg uppercase mx-3 py-1 font-medium text-slate-900">
-                {formatCurrency(pizza.unitPrice)}
+                {formatCurrency(unitPrice)}
               </p>
-              {/* //<DeleteItem pizzaID={pizza.id} /> */}
-              <ButtonStyle type="small" onClick={handleAddToCart}>
-                ADD TO CART
-              </ButtonStyle>
+              {isInCart ? (
+                <div className="flex items-center gap-3 sm:gap-8">
+                  <UpdateItem pizzaID={id} qty={currentQuantity} />
+                  <DeleteItem pizzaID={id} />
+                </div>
+              ) : (
+                <ButtonStyle type="small" onClick={handleAddToCart}>
+                  ADD TO CART
+                </ButtonStyle>
+              )}
             </div>
           ) : (
             <div className="mt-auto flex items-center justify-between">

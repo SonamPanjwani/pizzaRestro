@@ -9,6 +9,9 @@ import Order from "./features/order/Order";
 import AppLayout from "./uiComponents/AppLayout";
 import Error from "./uiComponents/Error";
 import ThankYou from "./features/order/ThankYou";
+import LoginLanding from "./features/user/Authentication/LoginLanding";
+import SignUp from "./features/user/SignUp";
+//import ProtectedRoute from "./uiComponents/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +33,10 @@ const router = createBrowserRouter([
         element: <Cart />,
       },
       {
+        path: "/login",
+        element: <LoginLanding />,
+      },
+      {
         path: "/order/new",
         element: <CreateOrder />,
         action: createOrderAction,
@@ -43,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "/thankyou",
         element: <ThankYou />,
+      },
+      {
+        path: "/signup",
+        element: <SignUp />,
       },
     ],
   },

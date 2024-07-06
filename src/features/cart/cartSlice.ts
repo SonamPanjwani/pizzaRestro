@@ -65,7 +65,7 @@ const cartSlice = createSlice({
       //   item.totalPrice = item.unitPrice * item.quantity;
       // } this is working great but another logic if we encounter a 0
       if (item) {
-        if (item.quantity === 0) {
+        if (item.quantity === 1) {
           cartSlice.caseReducers.deleteItem(state, action);
         } else if (item.quantity > 0) {
           item.quantity--;
@@ -115,4 +115,10 @@ export const getCart = (state: RootState) => {
   console.log(currentCart);
 
   return currentCart;
+};
+export const getElementById = (state: RootState, id: number): number => {
+  const currentCart = state.cart.cart.flat();
+  console.log(currentCart);
+  const item = currentCart.find((item) => item.pizzaID === id)?.quantity ?? 0;
+  return item;
 };

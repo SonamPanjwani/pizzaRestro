@@ -8,7 +8,7 @@ function LinkStyle({ children, to }: linkStyleProp) {
   const navigate = useNavigate();
 
   const className =
-    "text-xl font-semibold text-stone-800 hover:text-stone-900 hover:underline bg-yellow-200 px-3 py-1 bg-opacity-35 ";
+    "text-lg font-semibold text-stone-800 hover:text-stone-900 hover:underline bg-yellow-200 px-3 py-1 bg-opacity-35 ";
 
   if (to === "-1") {
     return (
@@ -23,7 +23,6 @@ function LinkStyle({ children, to }: linkStyleProp) {
       <Link to={to} className={className}>
         {children}
       </Link>
-      ;
     </div>
   );
 }

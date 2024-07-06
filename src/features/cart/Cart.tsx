@@ -7,36 +7,14 @@ import { clearCart } from "./cartSlice";
 import CartItem from "./CartItem";
 import EmptyCart from "./EmptyCart";
 
-// const fakeCart: cartType[] = [
-//   {
-//     pizzaID: 12,
-//     name: "Mediterranean",
-//     quantity: 2,
-//     unitPrice: 16,
-//     totalPrice: 32,
-//   },
-//   {
-//     pizzaID: 6,
-//     name: "Vegetale",
-//     quantity: 1,
-//     unitPrice: 13,
-//     totalPrice: 13,
-//   },
-//   {
-//     pizzaID: 11,
-//     name: "Spinach & Mushroom",
-//     quantity: 1,
-//     unitPrice: 15,
-//     totalPrice: 15,
-//   },
-// ];
 const Cart: React.FC = () => {
   //const cart = fakeCart; used earlier to see the output
   const username = useSelector((state: RootState) => state.user.username);
-  //const cart = useSelector((state: RootState) => state.cart.cart.flat());
+
   const cart = useAppSelector((state: RootState) => state.cart.cart.flat());
   const dispatch = useDispatch();
-  //console.log(cart.flat());
+  console.log(cart);
+
   if (!cart.length) return <EmptyCart />;
 
   return (
