@@ -14,10 +14,6 @@ type itemType = {
 function CartItem(item: itemType) {
   console.log(item); // here item is object
 
-  //const items = Object.values(item);
-  //const objItem = item[0];
-  //console.log(...item);
-
   return (
     <>
       <li className="py-3  sm-flex sm:items-center sm:justify-center">

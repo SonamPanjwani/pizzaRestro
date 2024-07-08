@@ -20,7 +20,7 @@ function MenuItem({ pizza }: { pizza: pizzaProp }) {
   console.log(currentQuantity);
   const isInCart = currentQuantity > 0;
 
-  const handleAddToCart = () => {
+  async function handleAddToCart() {
     const newItem: item = {
       pizzaID: id,
       name,
@@ -33,8 +33,7 @@ function MenuItem({ pizza }: { pizza: pizzaProp }) {
     console.log(qty);
 
     dispatch(addItem(newItem));
-  };
-
+  }
   return (
     <>
       <div className=" w-auto flex justigy-between">

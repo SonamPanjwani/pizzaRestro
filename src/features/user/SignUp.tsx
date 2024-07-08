@@ -1,26 +1,46 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import ButtonStyle from "../../uiComponents/ButtonStyle";
 import { FormEvent, useState } from "react";
+import { supabase } from "../../services/client";
 
 function SignUp() {
   const username = useSelector((state: RootState) => state.user.username);
+  console.log(username);
   const [error, setError] = useState<string | null>(null);
-  const [active, setActive] = useState<boolean>();
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+
+  const navigate = useNavigate();
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
     const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    console.log(data);
-    const password = data.password as string;
-    const rePassword = data.passwordConfirm as string;
-    if (password === rePassword) {
-      setActive(true);
-      setError(null);
+    const dataObject = Object.fromEntries(formData.entries());
+    console.log(dataObject);
+    const { Email, Password, passwordConfirm, Customer, Phone } = dataObject;
+
+    if (Password !== passwordConfirm) {
+      setError("Passwords do not match");
+
+      return;
+    }
+    const { data, error } = await supabase.auth.signUp({
+      email: Email as string,
+      password: Password as string,
+      options: {
+        data: {
+          Customer,
+          contact: Phone,
+        },
+      },
+    });
+    if (error) {
+      console.error("Error signing up:", error.message);
+      setError(error.message);
     } else {
-      setActive(false);
-      setError("Password do not match");
+      navigate("/login");
+      console.log(data);
     }
   }
 
@@ -87,19 +107,16 @@ function SignUp() {
           </label>
 
           <input
-            className="input mb-8 w-full text-stone-900"
+            className="input w-full text-stone-900"
             type="password"
             name="passwordConfirm"
             required
           />
-          {!error && <p>{error}</p>}
+          <span className="bg-yellow-200 bg-opacity-35 rounded-xl text-red-900 text-lg  font-semibold px-3 py-1">
+            {error}
+          </span>
         </div>
         <div className="flex flex-row items-center text-center gap-3">
-          {/* {active ? (
-            <ButtonStyle type="primary">Create Account</ButtonStyle>
-          ) : (
-            <ButtonStyle type="notActive">Create Account</ButtonStyle>
-          )} */}
           <ButtonStyle type="primary">Create Account</ButtonStyle>
           <ButtonStyle type="primary" to="/">
             Cancel

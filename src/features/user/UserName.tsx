@@ -1,14 +1,14 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { useAppSelector } from "../../store";
 //import LoginPage from "./Authentication/LoginPage";
 
 function UserName() {
-  const username = useSelector((state: RootState) => state.user.username);
-  //console.log(username);
-
+  const username = useAppSelector((state) => state.user.username);
+  // const state = useAppSelector((state) => state.user.statusLogin);
+  // console.log(username);
+  // console.log(state);
   if (!username) return null;
   return (
-    <div className="hidden  tracking-widest text-stone-800 font-semibold md:block">
+    <div className="hidden mt-4  tracking-widest text-stone-800 font-semibold md:block">
       {username}
     </div>
   );

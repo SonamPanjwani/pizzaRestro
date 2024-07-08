@@ -1,4 +1,3 @@
-//import { Link } from "react-router-dom";
 import LinkStyle from "../../uiComponents/LinkStyle";
 import ButtonStyle from "../../uiComponents/ButtonStyle";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,12 +7,10 @@ import CartItem from "./CartItem";
 import EmptyCart from "./EmptyCart";
 
 const Cart: React.FC = () => {
-  //const cart = fakeCart; used earlier to see the output
   const username = useSelector((state: RootState) => state.user.username);
-
   const cart = useAppSelector((state: RootState) => state.cart.cart.flat());
   const dispatch = useDispatch();
-  console.log(cart);
+  console.log(cart); // [{} ,{}]
 
   if (!cart.length) return <EmptyCart />;
 

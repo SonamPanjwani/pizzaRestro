@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export type initialStateType = {
-  username: string;
+  username: string | null;
+  statusLogin: string | null;
 };
 
 const initialState: initialStateType = {
-  username: " ",
+  username: localStorage.getItem("savedUsername"),
+  statusLogin: localStorage.getItem("loginStatus"),
 };
 
 export const userSlice = createSlice({
@@ -14,12 +16,19 @@ export const userSlice = createSlice({
   reducers: {
     updateName(state, action) {
       state.username = action.payload;
-      console.log(state);
+      //console.log(state);
+      state.username = action.payload;
+      localStorage.setItem("savedUsername", action.payload);
+    },
+
+    setStatusLogin(state, action) {
+      state.statusLogin = action.payload;
+      localStorage.setItem("loginStatus", action.payload);
     },
   },
 });
 
-export const { updateName } = userSlice.actions;
+export const { updateName, setStatusLogin } = userSlice.actions;
 
 export default userSlice.reducer;
 

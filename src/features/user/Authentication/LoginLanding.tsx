@@ -1,20 +1,28 @@
 import ButtonStyle from "../../../uiComponents/ButtonStyle";
 import LinkStyle from "../../../uiComponents/LinkStyle";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { login } from "../../../services/apiAuth";
 import { useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setStatusLogin } from "../userSlice";
+import { useAppSelector } from "../../../store";
 
 //import UserName from "../UserName";
 useSelector;
 function LoginLanding() {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [err, setErr] = useState<string | null>("");
   const [success, setSuccess] = useState<boolean>();
+  const status = useAppSelector((state) => state.user.statusLogin);
+
+  useEffect(() => {
+    console.log(status);
+  }, [status]);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -27,7 +35,7 @@ function LoginLanding() {
     console.log(response);
     if (response.success) {
       setSuccess(true);
-
+      dispatch(setStatusLogin(true));
       navigate("/menu");
     } else {
       setSuccess(false);
