@@ -20,7 +20,7 @@ function MenuItem({ pizza }: { pizza: pizzaProp }) {
   console.log(currentQuantity);
   const isInCart = currentQuantity > 0;
 
-  async function handleAddToCart() {
+  function handleAddToCart() {
     const newItem: item = {
       pizzaID: id,
       name,
