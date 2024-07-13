@@ -2,8 +2,12 @@ import { useLoaderData } from "react-router-dom";
 import { getMenu } from "../../services/apiRestaurant";
 import MenuItem from "./MenuItem";
 import { pizzaProp } from "../../utilities/Types";
+import { useDispatch } from "react-redux";
+import { setDisplay } from "../user/userSlice";
 
 function Menu() {
+  const dispatch = useDispatch();
+  dispatch(setDisplay(true));
   const menu = useLoaderData() as pizzaProp[];
   console.log(menu);
   return (

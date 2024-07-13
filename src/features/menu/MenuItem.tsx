@@ -27,6 +27,7 @@ function MenuItem({ pizza }: { pizza: pizzaProp }) {
       quantity: 1,
       unitPrice,
       totalPrice: unitPrice * 1,
+      image_url: imageUrl,
     };
     console.log(newItem);
     const qty = newItem.quantity;

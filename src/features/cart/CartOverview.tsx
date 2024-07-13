@@ -8,8 +8,9 @@ function CartOverview() {
   const totalqty = useSelector(getTotalQty);
   const totalPrice = useSelector(getTotalPrice);
   const status = useAppSelector((state) => state.user.statusLogin);
-  if (!totalqty) return null;
-
+  const display = useAppSelector((state) => state.user.display);
+  if (!totalqty || !display) return null;
+  //if (!display) return null;
   return (
     <>
       {status && (
@@ -22,7 +23,10 @@ function CartOverview() {
             <span>{totalqty} pizzas</span>
             <span>₹ {totalPrice}</span>
           </p>
-          <Link to="/cart">Open Cart &rarr;</Link>
+          <div className="flex gap-5">
+            <Link to="/menu"> Menu </Link>
+            <Link to="/cart">Open Cart &rarr;</Link>
+          </div>
         </div>
       )}
     </>

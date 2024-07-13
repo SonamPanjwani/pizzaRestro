@@ -1,75 +1,85 @@
-import { useLoaderData } from "react-router-dom";
-import { getOrder } from "../../services/apiRestaurant";
-import {
-  calcMinutesLeft,
-  formatCurrency,
-  formatDate,
-} from "../../utilities/helperFunctions";
-import { orderProp, loaderParams } from "../../utilities/Types";
-//import { useSelector } from "react-redux";
-//import { RootState } from "../../store";
-//import CartItem from "../cart/CartItem";
-//import OrderItem from "./OrderItem";
-
+import { useDispatch } from "react-redux";
+import { setDisplay } from "../user/userSlice";
+import { supabase } from "../../services/client";
+import { useEffect, useState } from "react";
+import { useAppSelector } from "../../store";
 function Order() {
-  const order = useLoaderData() as orderProp;
-  //const cart = useSelector((state: RootState) => state.cart.cart.flat());
-  const deliveryIn = calcMinutesLeft(order.estimatedDelivery);
+  const dispatch = useDispatch();
+  const [orderData, setOrderData] = useState([]);
+  dispatch(setDisplay(false));
+  const priority = useAppSelector((state) => state.order.priority);
+  console.log(priority);
+  useEffect(() => {
+    async function getOrder() {
+      try {
+        const { data, error } = await supabase.from("Cart").select("*");
+        setOrderData(data);
+        console.log(orderData);
+      } catch (error) {
+        console.log("Error fetching ORder", error);
+      }
+    }
+    getOrder();
+  }, []);
+  let priorityPrice = 0;
+  if (priority) {
+    priorityPrice = 5;
+  } else {
+    priorityPrice = 0;
+  }
+  const total = orderData.reduce((acc, item) => {
+    return acc + item.totalPrice;
+  }, 0);
 
   return (
-    <div className="px-4 py-6 space-y-8">
-      <div
-        className="flex items-center justify-between
-      flex-wrap gap-2"
-      >
-        <h2 className="text-xl font-semibold">Order #{order.id}Status</h2>
-        <div className="spaxe-x-2">
-          {order.priority && (
-            <span className="rounded-full py-1 text-sm bg-red-500 font-semibold uppercase tracking-wide text-red-50">
-              Priority Order
-            </span>
-          )}
-          <span className="rounded-full py-1 text-sm bg-green-500 font-semibold uppercase tracking-wide text-green-50">
-            {order.status} Order
-          </span>
+    <div className="px-4 py-6  space-y-8 mt-20 bg-yellow-200 bg-opacity-35">
+      <div>
+        <div className="flex items-center justify-between text-stone-900  ">
+          <h2 className="text-3xl text-stone-900 font-semibold underline">
+            Your Order Details
+          </h2>
+          <div className="spaxe-x-2">
+            {priority && (
+              <span className="rounded-full py-1 px-3 text-sm bg-red-500 font-semibold uppercase tracking-wide text-red-50">
+                Priority Order
+              </span>
+            )}
+          </div>
         </div>
-        <div
-          className="flex items-center justify-between
-      flex-wrap gap-2 bg-stone-200 px-6 py-5"
-        >
-          <p className="font-medium">
-            {deliveryIn >= 0
-              ? `Only ${deliveryIn} minutes left`
-              : `Order Should have Arrived`}
-          </p>
-          <p className="text-xs text-stone-500">
-            ( Estimated Delivery : {formatDate(order.estimatedDelivery)})
-          </p>
-        </div>
-        <ul className="divide-y divide-stone-200 border-b border-t"></ul>
-        <div className="space-y-2 bg-stone-200 px-6 py-5">
-          <p className="text-sm font-medium text-stone-600">
-            Price Pizza:{formatCurrency(order.orderPrice)}
-          </p>
 
-          {order.priority && (
-            <p className="text-sm font-medium text-stone-600">
-              {" "}
-              Price Priority : {formatCurrency(order.priorityPrice)}
-            </p>
-          )}
-          <p className="text-sm font-bold text-stone-600">
-            Amount to be Paid at the time of delivery:
-            {formatCurrency(order.orderPrice + order.priorityPrice)}
+        <div className="divide-y border-b-1 divide-stone-800">
+          {orderData.map((item, index) => (
+            <li
+              key={index}
+              className="py-4 flex text-xl   text-stone-800  font-semibold justify-between"
+            >
+              <div>
+                <h3>
+                  {index + 1}
+                  {".  "}
+                  {item.name}
+                </h3>
+              </div>
+              <div>
+                <p>
+                  {item.quantity} * ₹{item.unitPrice} = ₹{item.totalPrice}
+                </p>
+              </div>
+            </li>
+          ))}
+        </div>
+        <div className="space-y-2  bg-yellow-200 bg-opacity-30 px-6 py-5 text-lg font-medium text-stone-800">
+          <p>Price Pizza: ₹ {total}</p>
+
+          <p>Price Priority : ₹ {priorityPrice}</p>
+
+          <p>
+            Amount to be Paid at the time of delivery: ₹ {total + priorityPrice}
           </p>
         </div>
       </div>
     </div>
   );
 }
-export async function loader(params: loaderParams) {
-  console.log(params.params.orderId);
-  const order = await getOrder(params.params.orderId);
-  return order;
-}
+
 export default Order;

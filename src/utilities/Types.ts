@@ -4,6 +4,7 @@ export type item = {
   quantity: number;
   unitPrice: number;
   totalPrice: number;
+  image_url?: string;
 };
 
 export type cartType = {
@@ -48,12 +49,3 @@ export type loaderParams = {
     orderId: number | string;
   };
 };
-// export type orderItemProps = {
-//   items: {
-//     quantity: number;
-//     name: string;
-//     totalPrice: number;
-//   };
-//   ingredients: [];
-//   isLoadingIngredients: boolean;
-// };

@@ -1,46 +1,92 @@
-//import { useState } from "react";
-
-import { Form, useNavigation } from "react-router-dom";
-
-//import { orderProp } from "../../utilities/Types";
-//import { createOrder } from "../../services/apiRestaurant";
+import { Form, useNavigate } from "react-router-dom";
 import ButtonStyle from "../../uiComponents/ButtonStyle";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import EmptyCart from "../cart/EmptyCart";
 import { supabase } from "../../services/client";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setDisplay } from "../user/userSlice";
+import { priorityOrder } from "./orderSlice";
 
 function CreateOrder() {
   const cart = useSelector((state: RootState) => state.cart.cart.flat());
   console.log(cart);
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
-  const username = useSelector((state: RootState) => state.user.username);
+  const dispatch = useDispatch();
+  dispatch(setDisplay(true));
+  const navigate = useNavigate();
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [userData, setUserData] = useState([]);
+
+  useEffect(() => {
+    handlefetchUser();
+  }, []);
+
   if (!cart.length) return <EmptyCart />;
-  async function handleclick() {
-    console.log("handle clik");
+
+  async function handlefetchUser() {
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+    if (error) {
+      console.log("error fetching auth data", error);
+    }
+    const { userId } = user.user_metadata;
+    console.log(userId);
 
     try {
-      for (const item of cart) {
+      const { data, error } = await supabase
+        .from("user")
+        .select("*")
+        .eq("id", userId)
+        .single();
+      console.log(data);
+      setUserData(data);
+      if (error) {
+        console.log(error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  console.log(userData);
+  const { UserName, ContactInfo, Address } = userData;
+
+  async function handleclick() {
+    console.log("handle click");
+    setIsSubmitting(true);
+    try {
+      cart.forEach(async (item) => {
         const currCart = {
           pizzaId: item.pizzaID,
           name: item.name,
           unitPrice: item.unitPrice,
-
           quantity: item.quantity,
           totalPrice: item.unitPrice * item.quantity,
         };
-        console.log(currCart);
+        console.log("Current Cart Item:", currCart);
 
-        const { data, error } = await supabase.from("Cart").insert(currCart);
-        if (error) {
-          console.error("Error inserring");
-          throw error;
+        try {
+          const { data, error } = await supabase.from("Cart").insert(currCart); // Inserting as an array
+
+          if (error) {
+            console.error("Error inserting ,needs update");
+
+            if (error) {
+              console.log("error updating");
+            }
+          }
+        } catch (error) {
+          console.error("Error inserting data", error);
         }
-        console.log("data inserted ", data);
-      }
+      });
     } catch (error) {
-      console.log("Error Inserting data");
+      console.log("error");
+    } finally {
+      navigate("/order");
+      setIsSubmitting(false);
     }
   }
 
@@ -59,7 +105,7 @@ function CreateOrder() {
               className="input grow  text-stone-900 capitalize"
               type="text"
               name="Customer"
-              defaultValue={username}
+              defaultValue={UserName}
               required
             />
           </div>
@@ -69,9 +115,10 @@ function CreateOrder() {
             </label>
             <div className="grow">
               <input
-                className="input w-full"
+                className="input w-full  text-stone-900 capitalize"
                 type="tel"
                 name="Phone"
+                defaultValue={ContactInfo}
                 required
               />
             </div>
@@ -83,9 +130,10 @@ function CreateOrder() {
             </label>
             <div className="grow ">
               <input
-                className="input w-full"
+                className="input w-full  text-stone-900 capitalize"
                 type="text"
                 name="Address"
+                defaultValue={Address}
                 required
               />
             </div>
@@ -97,22 +145,20 @@ function CreateOrder() {
               type="checkbox"
               name="priority"
               id="priority"
+              onClick={(e) => dispatch(priorityOrder(e.target.checked))}
             />
             <label
               htmlFor="priority"
               className="  text-stone-900 font-semibold text-lg"
             >
-              Want to place your order as priority?
+              Want to place your order as priority?*
+              <p>* with additional charges of ₹ 5 only /-</p>
             </label>
           </div>
           <div>
             {/* <input type="hidden" name="cart" value={JSON.stringify(cart)} /> */}
-            <ButtonStyle
-              disabled={isSubmitting}
-              type="primary"
-              onClick={handleclick}
-            >
-              {isSubmitting ? "Placing order ..." : "Order Now!!"}
+            <ButtonStyle type="primary" onClick={handleclick}>
+              Order Now!!
             </ButtonStyle>
           </div>
         </Form>

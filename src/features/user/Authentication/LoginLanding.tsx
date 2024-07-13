@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setStatusLogin } from "../userSlice";
+import { setDisplay, setStatusLogin } from "../userSlice";
 import { useAppSelector } from "../../../store";
 
 //import UserName from "../UserName";
@@ -19,7 +19,7 @@ function LoginLanding() {
   const [err, setErr] = useState<string | null>("");
   const [success, setSuccess] = useState<boolean>();
   const status = useAppSelector((state) => state.user.statusLogin);
-
+  dispatch(setDisplay(true));
   useEffect(() => {
     console.log(status);
   }, [status]);

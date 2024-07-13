@@ -6,6 +6,9 @@ import { setStatusLogin } from "../userSlice";
 import { useAppSelector } from "../../../store";
 import { useEffect } from "react";
 import UserName from "../UserName";
+import { supabase } from "../../../services/client";
+import { clearCart } from "../../cart/cartSlice";
+import { priorityOrder } from "../../order/orderSlice";
 
 function LogOut() {
   const navigate = useNavigate();
@@ -19,10 +22,19 @@ function LogOut() {
     console.log(username);
   }, [status, username]);
 
-  function handleClick() {
+  async function handleClick() {
     logOff();
     dispatch(setStatusLogin(false));
+    dispatch(clearCart());
+    dispatch(priorityOrder(false));
+
     navigate("/thankyou");
+    try {
+      const response = await supabase.from("Cart").delete().select("*");
+      console.log(response);
+    } catch (error) {
+      console.log("errrr");
+    }
   }
 
   return (

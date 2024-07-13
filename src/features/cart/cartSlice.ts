@@ -8,16 +8,7 @@ type initialStateType = {
 };
 
 const initialState: initialStateType = {
-  cart: [
-    // {
-    //   //taking fake data for checking purpose
-    //   pizzaID: 12,
-    //   name: "Mediterranean",
-    //   quantity: 2,
-    //   unitPrice: 16,
-    //   totalPrice: 32,
-    // },
-  ],
+  cart: [],
 };
 
 const cartSlice = createSlice({
