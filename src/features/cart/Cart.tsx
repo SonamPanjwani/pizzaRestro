@@ -2,36 +2,25 @@ import LinkStyle from "../../uiComponents/LinkStyle";
 import ButtonStyle from "../../uiComponents/ButtonStyle";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, useAppSelector } from "../../store";
-import { clearCart } from "./cartSlice";
+import { clearCart, getTotalPrice } from "./cartSlice";
 import CartItem from "./CartItem";
 import EmptyCart from "./EmptyCart";
-import { useEffect, useState } from "react";
 import { setDisplay } from "../user/userSlice";
 import { supabase } from "../../services/client";
 import { priorityOrder } from "../order/orderSlice";
-
 const Cart: React.FC = () => {
   const username = useSelector((state: RootState) => state.user.username);
   const cart = useAppSelector((state: RootState) => state.cart.cart.flat());
   const dispatch = useDispatch();
+  const totalPrice = useSelector(getTotalPrice);
 
-  const [totalAmt, setTotalAmt] = useState<number>(0);
   dispatch(setDisplay(false));
   dispatch(priorityOrder(false));
-  console.log(cart); // [{} ,{}]
-
-  useEffect(() => {
-    const handleCartAmount = () => {
-      const total = cart.reduce((acc, item) => acc + item.totalPrice, 0);
-      setTotalAmt(total);
-    };
-
-    handleCartAmount();
-  }, []);
+  console.log(cart);
 
   async function emptyCart() {
     dispatch(clearCart());
-    const response = await supabase.from("Cart").delete().select("*");
+    await supabase.from("Cart").delete().select("*");
   }
   if (!cart.length) return <EmptyCart />;
   return (
@@ -49,7 +38,7 @@ const Cart: React.FC = () => {
 
       <div className="flex mt-6 space-x-2 justify-between ">
         <div className="text-stone-900 font-semibold text-xl">
-          Your Total Amount comes to be : ₹ {totalAmt}
+          Your Total Amount comes to be : ₹ {totalPrice}
         </div>
         <div className=" flex flex-row gap-2">
           <ButtonStyle to="/order/new" type="primary">

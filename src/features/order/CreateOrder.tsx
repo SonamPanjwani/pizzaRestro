@@ -1,7 +1,7 @@
 import { Form, useNavigate } from "react-router-dom";
 import ButtonStyle from "../../uiComponents/ButtonStyle";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState, useAppSelector } from "../../store";
 import EmptyCart from "../cart/EmptyCart";
 import { supabase } from "../../services/client";
 import { useEffect, useState } from "react";
@@ -14,49 +14,51 @@ function CreateOrder() {
   console.log(cart);
   const dispatch = useDispatch();
   dispatch(setDisplay(true));
+  const priority = useAppSelector((state) => state.order.priority);
   const navigate = useNavigate();
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [dataSuccess, setDatasuccess] = useState<boolean>(false);
+  const [uid, setid] = useState<number>();
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
-    handlefetchUser();
+    handlefetchUserID();
+    getUser();
   }, []);
 
   if (!cart.length) return <EmptyCart />;
 
-  async function handlefetchUser() {
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
-    if (error) {
-      console.log("error fetching auth data", error);
-    }
-    const { userId } = user.user_metadata;
+  async function handlefetchUserID() {
+    const { data, error } = await supabase.auth.getUser();
+    console.log(data);
+    if (error) throw error;
+    const { userId } = data.user.user_metadata;
     console.log(userId);
+    setid(userId);
+  }
+  async function getUser() {
+    const { data, error } = await supabase
+      .from("user")
+      .select("*")
+      .eq("id", uid)
+      .single();
 
-    try {
-      const { data, error } = await supabase
-        .from("user")
-        .select("*")
-        .eq("id", userId)
-        .single();
-      console.log(data);
+    console.log(data);
+    if (data) {
+      setDatasuccess(true);
       setUserData(data);
-      if (error) {
-        console.log(error);
-      }
-    } catch (error) {
+    }
+
+    if (error) {
       console.log(error);
     }
   }
+
   console.log(userData);
   const { UserName, ContactInfo, Address } = userData;
 
   async function handleclick() {
     console.log("handle click");
-    setIsSubmitting(true);
+
     try {
       cart.forEach(async (item) => {
         const currCart = {
@@ -69,7 +71,7 @@ function CreateOrder() {
         console.log("Current Cart Item:", currCart);
 
         try {
-          const { data, error } = await supabase.from("Cart").insert(currCart); // Inserting as an array
+          const { error } = await supabase.from("Cart").insert(currCart); // Inserting as an array
 
           if (error) {
             console.error("Error inserting ,needs update");
@@ -86,7 +88,6 @@ function CreateOrder() {
       console.log("error");
     } finally {
       navigate("/order");
-      setIsSubmitting(false);
     }
   }
 
@@ -105,7 +106,7 @@ function CreateOrder() {
               className="input grow  text-stone-900 capitalize"
               type="text"
               name="Customer"
-              defaultValue={UserName}
+              defaultValue={dataSuccess ? UserName : ""}
               required
             />
           </div>
@@ -118,7 +119,7 @@ function CreateOrder() {
                 className="input w-full  text-stone-900 capitalize"
                 type="tel"
                 name="Phone"
-                defaultValue={ContactInfo}
+                defaultValue={dataSuccess ? ContactInfo : ""}
                 required
               />
             </div>
@@ -133,20 +134,33 @@ function CreateOrder() {
                 className="input w-full  text-stone-900 capitalize"
                 type="text"
                 name="Address"
-                defaultValue={Address}
+                defaultValue={dataSuccess ? Address : ""}
                 required
               />
             </div>
           </div>
           <div className="mb-12  flex gap-5 items-center">
-            <input
-              className="h-6 w-6 accent-yellow-400 focus:outline-none
+            {priority ? (
+              <input
+                className="h-6 w-6 accent-yellow-400 focus:outline-none
               focus:ring focus:ring-offset-2 focus:ring-yellow-400"
-              type="checkbox"
-              name="priority"
-              id="priority"
-              onClick={(e) => dispatch(priorityOrder(e.target.checked))}
-            />
+                type="checkbox"
+                name="priority"
+                defaultChecked
+                id="priority"
+                onChange={(e) => dispatch(priorityOrder(e.target.checked))}
+              />
+            ) : (
+              <input
+                className="h-6 w-6 accent-yellow-400 focus:outline-none
+            focus:ring focus:ring-offset-2 focus:ring-yellow-400"
+                type="checkbox"
+                name="priority"
+                id="priority"
+                onChange={(e) => dispatch(priorityOrder(e.target.checked))}
+              />
+            )}
+
             <label
               htmlFor="priority"
               className="  text-stone-900 font-semibold text-lg"

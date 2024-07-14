@@ -3,6 +3,7 @@ import { setDisplay } from "../user/userSlice";
 import { supabase } from "../../services/client";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../store";
+import { item } from "../../utilities/Types";
 function Order() {
   const dispatch = useDispatch();
   const [orderData, setOrderData] = useState([]);
@@ -14,20 +15,22 @@ function Order() {
       try {
         const { data, error } = await supabase.from("Cart").select("*");
         setOrderData(data);
+
         console.log(orderData);
+        if (error) throw error;
       } catch (error) {
         console.log("Error fetching ORder", error);
       }
     }
     getOrder();
-  }, []);
+  });
   let priorityPrice = 0;
   if (priority) {
     priorityPrice = 5;
   } else {
     priorityPrice = 0;
   }
-  const total = orderData.reduce((acc, item) => {
+  const total = orderData.reduce((acc: number, item: item) => {
     return acc + item.totalPrice;
   }, 0);
 
@@ -48,7 +51,7 @@ function Order() {
         </div>
 
         <div className="divide-y border-b-1 divide-stone-800">
-          {orderData.map((item, index) => (
+          {orderData.map((item: item, index: number) => (
             <li
               key={index}
               className="py-4 flex text-xl   text-stone-800  font-semibold justify-between"

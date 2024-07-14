@@ -10,7 +10,7 @@ function CartOverview() {
   const status = useAppSelector((state) => state.user.statusLogin);
   const display = useAppSelector((state) => state.user.display);
   if (!totalqty || !display) return null;
-  //if (!display) return null;
+
   return (
     <>
       {status && (
