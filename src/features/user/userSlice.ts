@@ -32,6 +32,7 @@ export type initialStateType = {
   position: positionType | null;
   address: string;
   error: string | undefined;
+  userId: string | number | null;
 };
 
 const initialState: initialStateType = {
@@ -42,6 +43,7 @@ const initialState: initialStateType = {
   address: "",
   error: "",
   display: localStorage.getItem("displayStatus"),
+  userId: localStorage.getItem("userId"),
 };
 
 export const userSlice = createSlice({
@@ -63,6 +65,10 @@ export const userSlice = createSlice({
       state.display = action.payload;
       localStorage.setItem("displayStatus", action.payload);
     },
+    setUserId(state, action) {
+      state.userId = action.payload;
+      localStorage.setItem("userId", action.payload);
+    },
   },
   extraReducers: (builder) =>
     builder
@@ -80,6 +86,7 @@ export const userSlice = createSlice({
       }),
 });
 
-export const { updateName, setStatusLogin, setDisplay } = userSlice.actions;
+export const { updateName, setStatusLogin, setDisplay, setUserId } =
+  userSlice.actions;
 
 export default userSlice.reducer;

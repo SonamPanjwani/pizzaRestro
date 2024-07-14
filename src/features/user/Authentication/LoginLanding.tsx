@@ -6,14 +6,16 @@ import { useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setDisplay, setStatusLogin } from "../userSlice";
+import { setDisplay, setStatusLogin, setUserId } from "../userSlice";
 import { useAppSelector } from "../../../store";
+import { supabase } from "../../../services/client";
 
 //import UserName from "../UserName";
 useSelector;
 function LoginLanding() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [err, setErr] = useState<string | null>("");
@@ -23,6 +25,15 @@ function LoginLanding() {
   useEffect(() => {
     console.log(status);
   }, [status]);
+
+  async function handlefetchUserID() {
+    const { data, error } = await supabase.auth.getUser();
+    console.log(data);
+    if (error) throw error;
+    const { userId } = data.user.user_metadata;
+    console.log(userId);
+    dispatch(setUserId(userId));
+  }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -37,6 +48,7 @@ function LoginLanding() {
       setSuccess(true);
       dispatch(setStatusLogin(true));
       navigate("/menu");
+      handlefetchUserID();
     } else {
       setSuccess(false);
       setErr("Invalid Email or Password");

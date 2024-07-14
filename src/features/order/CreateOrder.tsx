@@ -16,42 +16,35 @@ function CreateOrder() {
   dispatch(setDisplay(true));
   const priority = useAppSelector((state) => state.order.priority);
   const navigate = useNavigate();
+
   const [dataSuccess, setDatasuccess] = useState<boolean>(false);
-  const [uid, setid] = useState<number>();
+
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
-    handlefetchUserID();
+    const userId = localStorage.getItem("userId");
+    console.log(userId);
+    async function getUser() {
+      const { data, error } = await supabase
+        .from("user")
+        .select("*")
+        .eq("id", userId)
+        .single();
+
+      console.log(data);
+      if (data) {
+        setDatasuccess(true);
+        setUserData(data);
+      }
+
+      if (error) {
+        console.log(error);
+      }
+    }
     getUser();
   }, []);
 
   if (!cart.length) return <EmptyCart />;
-
-  async function handlefetchUserID() {
-    const { data, error } = await supabase.auth.getUser();
-    console.log(data);
-    if (error) throw error;
-    const { userId } = data.user.user_metadata;
-    console.log(userId);
-    setid(userId);
-  }
-  async function getUser() {
-    const { data, error } = await supabase
-      .from("user")
-      .select("*")
-      .eq("id", uid)
-      .single();
-
-    console.log(data);
-    if (data) {
-      setDatasuccess(true);
-      setUserData(data);
-    }
-
-    if (error) {
-      console.log(error);
-    }
-  }
 
   console.log(userData);
   const { UserName, ContactInfo, Address } = userData;

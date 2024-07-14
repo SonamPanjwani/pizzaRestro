@@ -32,7 +32,6 @@ function MenuItem({ pizza }: { pizza: pizzaProp }) {
     console.log(newItem);
     const qty = newItem.quantity;
     console.log(qty);
-
     dispatch(addItem(newItem));
   }
   return (

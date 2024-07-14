@@ -23,7 +23,8 @@ function Order() {
       }
     }
     getOrder();
-  });
+  }, [orderData]);
+
   let priorityPrice = 0;
   if (priority) {
     priorityPrice = 5;

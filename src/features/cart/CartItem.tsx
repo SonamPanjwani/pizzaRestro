@@ -1,15 +1,8 @@
-//import { useSelector } from "react-redux";
-// import ButtonStyle from "../../uiComponents/ButtonStyle"; // isko hune reusuable component bana diya hai ab
-//import { item } from "../../utilities/Types";
 import { formatCurrency } from "../../utilities/helperFunctions";
-
-//import { RootState } from "../../store";
-//import { cartType } from "../../utilities/Types";
 import DeleteItem from "./DeleteItem";
 import { item } from "../../utilities/Types";
 import UpdateItem from "./UpdateItem";
 // import { supabase } from "../../services/client";
-// import { useEffect } from "react";
 
 type itemType = {
   item: item;
