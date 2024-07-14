@@ -7,6 +7,7 @@ import DeleteItem from "../cart/DeleteItem";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import UpdateItem from "../cart/UpdateItem";
+import { supabase } from "../../services/client";
 
 function MenuItem({ pizza }: { pizza: pizzaProp }) {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ function MenuItem({ pizza }: { pizza: pizzaProp }) {
   console.log(currentQuantity);
   const isInCart = currentQuantity > 0;
 
-  function handleAddToCart() {
+  async function handleAddToCart() {
     const newItem: item = {
       pizzaID: id,
       name,
@@ -33,7 +34,28 @@ function MenuItem({ pizza }: { pizza: pizzaProp }) {
     const qty = newItem.quantity;
     console.log(qty);
     dispatch(addItem(newItem));
+
+    try {
+      const { error } = await supabase.from("Cart").insert({
+        pizzaId: newItem.pizzaID,
+        name: newItem.name,
+        unitPrice: newItem.unitPrice,
+        quantity: newItem.quantity,
+        totalPrice: newItem.unitPrice * newItem.quantity,
+      });
+
+      if (error) {
+        console.error("Error inserting ,needs update");
+
+        if (error) {
+          console.log("error updating");
+        }
+      }
+    } catch (error) {
+      console.error("Error inserting data", error);
+    }
   }
+
   return (
     <>
       <div className=" w-auto flex justigy-between">
@@ -60,7 +82,11 @@ function MenuItem({ pizza }: { pizza: pizzaProp }) {
               </p>
               {isInCart ? (
                 <div className="flex items-center gap-3 sm:gap-8">
-                  <UpdateItem pizzaID={id} qty={currentQuantity} />
+                  <UpdateItem
+                    pizzaID={id}
+                    qty={currentQuantity}
+                    unitPrice={unitPrice}
+                  />
                   <DeleteItem pizzaID={id} />
                 </div>
               ) : (

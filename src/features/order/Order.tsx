@@ -66,7 +66,8 @@ function Order() {
               </div>
               <div>
                 <p>
-                  {item.quantity} * ₹{item.unitPrice} = ₹{item.totalPrice}
+                  {item.quantity} * ₹{item.unitPrice} = ₹
+                  {item.quantity * item.unitPrice}
                 </p>
               </div>
             </li>

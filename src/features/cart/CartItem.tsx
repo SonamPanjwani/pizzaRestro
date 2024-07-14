@@ -30,7 +30,11 @@ function CartItem(item: itemType) {
         </div>
         <div className="flex justify-end">
           <span className="flex gap-4">
-            <UpdateItem pizzaID={item.item.pizzaID} qty={item.item.quantity} />
+            <UpdateItem
+              pizzaID={item.item.pizzaID}
+              qty={item.item.quantity}
+              unitPrice={item.item.unitPrice}
+            />
 
             <DeleteItem pizzaID={item.item.pizzaID} />
           </span>

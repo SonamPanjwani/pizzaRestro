@@ -8,12 +8,29 @@ import EmptyCart from "./EmptyCart";
 import { setDisplay } from "../user/userSlice";
 import { supabase } from "../../services/client";
 import { priorityOrder } from "../order/orderSlice";
+
 const Cart: React.FC = () => {
   const username = useSelector((state: RootState) => state.user.username);
-  const cart = useAppSelector((state: RootState) => state.cart.cart.flat());
+  const cart = useAppSelector((state) => state.cart.cart.flat());
+
+  // const [cart, setCart] = useState([]);
   const dispatch = useDispatch();
   const totalPrice = useSelector(getTotalPrice);
 
+  // useEffect(() => {
+  //   async function getCart() {
+  //     try {
+  //       const { data, error } = await supabase.from("Cart").select("*");
+  //       setCart(data);
+
+  //       console.log(cart);
+  //       if (error) throw error;
+  //     } catch (error) {
+  //       console.log("Error fetching ORder", error);
+  //     }
+  //   }
+  //   getCart();
+  // }, [cart]);
   dispatch(setDisplay(false));
   dispatch(priorityOrder(false));
   console.log(cart);
