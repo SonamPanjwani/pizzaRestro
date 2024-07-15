@@ -42,6 +42,7 @@ function MenuItem({ pizza }: { pizza: pizzaProp }) {
         unitPrice: newItem.unitPrice,
         quantity: newItem.quantity,
         totalPrice: newItem.unitPrice * newItem.quantity,
+        imageUrl: newItem.image_url,
       });
 
       if (error) {

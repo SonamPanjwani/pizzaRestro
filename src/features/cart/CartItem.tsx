@@ -2,13 +2,13 @@ import { formatCurrency } from "../../utilities/helperFunctions";
 import DeleteItem from "./DeleteItem";
 import { item } from "../../utilities/Types";
 import UpdateItem from "./UpdateItem";
-// import { supabase } from "../../services/client";
 
 type itemType = {
   item: item;
 };
 function CartItem(item: itemType) {
   console.log(item);
+
   return (
     <>
       <li className="py-3 flex flex-row sm-flex sm:items-center sm:justify-between">

@@ -14,6 +14,7 @@ export type cartType = {
   unitPrice: number;
   totalPrice: number;
   item?: item;
+  image_url?: string;
 }[];
 
 export type pizzaProp = {
