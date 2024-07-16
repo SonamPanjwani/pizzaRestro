@@ -22,7 +22,7 @@ function LogOut() {
     console.log(username);
   }, [status, username]);
 
-  async function handleClick() {
+  async function handleClickLogOut() {
     logOff();
     dispatch(setStatusLogin(false));
     dispatch(clearCart());
@@ -43,7 +43,7 @@ function LogOut() {
         <UserName />
         <button
           className="mt-4 ml-2 tracking-wide text-stone-800 font-semibold md:block bg-yellow-500 px-2 rounded-full"
-          onClick={handleClick}
+          onClick={handleClickLogOut}
         >
           Log Out
         </button>

@@ -16,7 +16,7 @@ function CreateOrder() {
   dispatch(setDisplay(true));
   const priority = useAppSelector((state) => state.order.priority);
   const navigate = useNavigate();
-
+  const status = useAppSelector((state) => state.user.statusLogin);
   const [dataSuccess, setDatasuccess] = useState<boolean>(false);
 
   const [userData, setUserData] = useState([]);
@@ -99,7 +99,7 @@ function CreateOrder() {
               className="input grow  text-stone-900 capitalize"
               type="text"
               name="Customer"
-              defaultValue={dataSuccess ? UserName : ""}
+              defaultValue={dataSuccess && status ? UserName : ""}
               required
             />
           </div>
@@ -112,7 +112,7 @@ function CreateOrder() {
                 className="input w-full  text-stone-900 capitalize"
                 type="tel"
                 name="Phone"
-                defaultValue={dataSuccess ? ContactInfo : ""}
+                defaultValue={dataSuccess && status ? ContactInfo : ""}
                 required
               />
             </div>
@@ -127,7 +127,7 @@ function CreateOrder() {
                 className="input w-full  text-stone-900 capitalize"
                 type="text"
                 name="Address"
-                defaultValue={dataSuccess ? Address : ""}
+                defaultValue={dataSuccess && status ? Address : ""}
                 required
               />
             </div>

@@ -3,6 +3,7 @@ import SearchOrder from "../features/order/SearchOrder";
 //import UserName from "../features/user/UserName";
 import LogOut from "../features/user/Authentication/LogOut";
 import { useAppSelector } from "../store";
+import BackHome from "./BackHome";
 
 function Header() {
   const status = useAppSelector((state) => state.user.statusLogin);
@@ -17,11 +18,7 @@ function Header() {
         <SearchOrder />
       </div>
       <div className="flex  justify-end gap-6 ">
-        {status && (
-          <div>
-            <LogOut />
-          </div>
-        )}
+        {status ? <LogOut /> : <BackHome />}
       </div>
     </header>
   );

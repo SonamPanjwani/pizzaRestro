@@ -9,6 +9,7 @@ import Error from "./uiComponents/Error";
 import ThankYou from "./features/order/ThankYou";
 import LoginLanding from "./features/user/Authentication/LoginLanding";
 import SignUp from "./features/user/SignUp";
+
 //import ProtectedRoute from "./uiComponents/ProtectedRoute";
 
 const router = createBrowserRouter([
@@ -56,7 +57,11 @@ const router = createBrowserRouter([
   },
 ]);
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
 export default App;

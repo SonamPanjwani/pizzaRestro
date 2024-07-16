@@ -4,11 +4,14 @@ import { supabase } from "../../services/client";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../store";
 import { item } from "../../utilities/Types";
+
 function Order() {
   const dispatch = useDispatch();
   const [orderData, setOrderData] = useState([]);
+
   dispatch(setDisplay(false));
   const priority = useAppSelector((state) => state.order.priority);
+  const status = useAppSelector((state) => state.user.statusLogin);
   console.log(priority);
   useEffect(() => {
     async function getOrder() {
@@ -26,6 +29,12 @@ function Order() {
   }, [orderData]);
 
   let priorityPrice = 0;
+  let specialdiscount = 0;
+  if (status) {
+    specialdiscount = 5;
+  } else {
+    specialdiscount = 0;
+  }
   if (priority) {
     priorityPrice = 5;
   } else {
@@ -75,11 +84,16 @@ function Order() {
         </div>
         <div className="space-y-2  bg-yellow-200 bg-opacity-30 px-6 py-5 text-lg font-medium text-stone-800">
           <p>Price Pizza: ₹ {total}</p>
-
+          {status && (
+            <p>
+              special Discount for our privileged Customers = ₹{specialdiscount}
+            </p>
+          )}
           <p>Price Priority : ₹ {priorityPrice}</p>
 
           <p>
-            Amount to be Paid at the time of delivery: ₹ {total + priorityPrice}
+            Amount to be Paid at the time of delivery: ₹{" "}
+            {total + priorityPrice + specialdiscount}
           </p>
         </div>
       </div>

@@ -98,7 +98,10 @@ function LoginLanding() {
             <p className="text-base mt-3 mb-2">
               New to Fast React ?
               <LinkStyle to="/signup">Click here to Register</LinkStyle>
-              {/* //<LinkStyle to="/menu"> Continue Without SignUp </LinkStyle> */}
+            </p>
+            <p className="text-base mt-3 mb-2">
+              {"OR"}
+              <LinkStyle to="/menu"> Continue Without SignUp </LinkStyle>
             </p>
           </form>
         </div>

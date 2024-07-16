@@ -2,6 +2,7 @@ import { Outlet, useNavigation } from "react-router-dom";
 import CartOverview from "../features/cart/CartOverview";
 import Header from "./Header";
 import Loader from "./Loader";
+import Whatapp from "../services/Whatapp";
 
 function AppLayout() {
   const navigation = useNavigation();
@@ -16,7 +17,7 @@ function AppLayout() {
           <Outlet />
         </main>
       </div>
-
+      <Whatapp />
       <CartOverview />
     </div>
   );
