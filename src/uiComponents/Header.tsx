@@ -9,7 +9,7 @@ function Header() {
   const status = useAppSelector((state) => state.user.statusLogin);
 
   return (
-    <header className="flex items-center justify-between bg-yellow-400 sm:px-6 uppercase px-4 py-3 border-b-2 border-stone-400 ">
+    <header className="flex items-center justify-between bg-yellow-400 sm:px-6 uppercase px-4 py-3 ">
       <div className="flex w-1/2 justify-between">
         <Link to="/" className="tracking-widest text-stone-800 font-semibold">
           Fast React Pizza Co.
