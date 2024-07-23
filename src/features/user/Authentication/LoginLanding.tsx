@@ -49,6 +49,7 @@ function LoginLanding() {
       dispatch(setStatusLogin(true));
       navigate("/menu");
       handlefetchUserID();
+      console.log(success);
     } else {
       setSuccess(false);
       setErr("Invalid Email or Password");
