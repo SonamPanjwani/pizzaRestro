@@ -93,7 +93,7 @@ function SignUp() {
             className="input grow  text-stone-900 capitalize"
             type="text"
             name="Customer"
-            defaultValue={username}
+            defaultValue={username || ""}
             required
           />
         </div>
@@ -149,7 +149,7 @@ function SignUp() {
                 disabled={isLoadingAddress}
                 onClick={(e) => {
                   e.preventDefault();
-                  dispatch(fetchAddress());
+                  dispatch(fetchAddress() as any);
                 }}
               >
                 Get Location

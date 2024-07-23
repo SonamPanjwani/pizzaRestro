@@ -7,22 +7,22 @@ function getPosition() {
   });
 }
 
-export const fetchAddress = createAsyncThunk(
-  "user/fetchAddress",
-  async function () {
-    //get the users location
-    const positionObj: any = await getPosition();
-    const position = {
-      latitude: positionObj.coords.latitude,
-      longitude: positionObj.coords.longitude,
-    };
+export const fetchAddress = createAsyncThunk<{
+  position: { latitude: number; longitude: number };
+  address: string;
+}>("user/fetchAddress", async function () {
+  //get the users location
+  const positionObj: any = await getPosition();
+  const position = {
+    latitude: positionObj.coords.latitude,
+    longitude: positionObj.coords.longitude,
+  };
 
-    const addressObj = await getAddress(position);
-    const address = `${addressObj?.locality} , ${addressObj?.city} , ${addressObj?.countryName}`;
+  const addressObj = await getAddress(position);
+  const address = `${addressObj?.locality} , ${addressObj?.city} , ${addressObj?.countryName}`;
 
-    return { position, address };
-  }
-);
+  return { position, address };
+});
 
 export type initialStateType = {
   username: string | null;
