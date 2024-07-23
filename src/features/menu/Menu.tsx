@@ -13,7 +13,7 @@ function Menu() {
   return (
     <>
       <ul
-        className="divide-y w-auto divide-stone-400 px-3 mt-2 bg-yellow-200 bg-opacity-30
+        className="divide-y w-[400px] sm:w-auto mx-auto divide-stone-400 px-3 mt-2 bg-yellow-200 bg-opacity-30
       "
       >
         {menu.map((pizza) => (

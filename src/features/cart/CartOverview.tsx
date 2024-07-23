@@ -7,7 +7,7 @@ import { useAppSelector } from "../../store";
 function CartOverview() {
   const totalqty = useSelector(getTotalQty);
   const totalPrice = useSelector(getTotalPrice);
-  const status = useAppSelector((state) => state.user.statusLogin);
+  //const status = useAppSelector((state) => state.user.statusLogin);
   const display = useAppSelector((state) => state.user.display);
   if (!totalqty || !display) return null;
 

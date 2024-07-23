@@ -93,7 +93,7 @@ function Order() {
 
           <p>
             Amount to be Paid at the time of delivery: ₹{" "}
-            {total + priorityPrice + specialdiscount}
+            {total + priorityPrice - specialdiscount}
           </p>
         </div>
       </div>

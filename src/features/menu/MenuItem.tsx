@@ -59,53 +59,54 @@ function MenuItem({ pizza }: { pizza: pizzaProp }) {
 
   return (
     <>
-      <div className=" w-auto flex justigy-between">
-        <li className="flex gap-6 sm:gap-3 h-auto w-full py-2">
+      <div className="  w-full sm:w-auto flex justify-between">
+        <li className="flex  sm:flex-row gap-3 sm:gap-6 h-[150px] w-full my-3">
           <img
             src={imageUrl}
             alt={name}
             className={`
           h-24 ${soldOut ? "opacity-70 grayscale" : " "}`}
           />
-          <div className="flex flex-col grow pt-0.5">
-            <p className="font-semibold text-base md:text-xl text-slate-950">
-              {name}
-            </p>
-            <p className="text-xs sm:text-sm italic capitalize text-slate-900">
-              {ingredients.join(",")}
-            </p>
-          </div>
-
-          {!soldOut ? (
-            <div className="mt-auto flex gap-2 items-center justify-evenly sm:justify-between">
-              <p className="text-base sm:text-lg uppercase mx-3 py-1 font-medium text-slate-900">
-                {formatCurrency(unitPrice)}
+          <div className="flex flex-col grow  sm:flex-row sm:justify-between">
+            <div className="flex flex-col w-[100px] grow pt-0.5 mb-3">
+              <p className="font-semibold text-base md:text-xl text-slate-950">
+                {name}
               </p>
-              {isInCart ? (
-                <div className="flex items-center gap-3 sm:gap-8">
-                  <UpdateItem
-                    pizzaID={id}
-                    qty={currentQuantity}
-                    unitPrice={unitPrice}
-                  />
-                  <DeleteItem pizzaID={id} />
-                </div>
-              ) : (
-                <ButtonStyle type="small" onClick={handleAddToCart}>
+              <p className="text-xs sm:text-sm italic capitalize text-slate-900">
+                {ingredients.join(",")}
+              </p>
+            </div>{" "}
+            {!soldOut ? (
+              <div className="mt-auto flex gap-2 items-center justify-evenly sm:justify-between">
+                <p className="text-base sm:text-lg uppercase mx-3 py-1 font-medium text-slate-900">
+                  {formatCurrency(unitPrice)}
+                </p>
+                {isInCart ? (
+                  <div className="flex  gap-3 sm:gap-8">
+                    <UpdateItem
+                      pizzaID={id}
+                      qty={currentQuantity}
+                      unitPrice={unitPrice}
+                    />
+                    <DeleteItem pizzaID={id} />
+                  </div>
+                ) : (
+                  <ButtonStyle type="small" onClick={handleAddToCart}>
+                    ADD TO CART
+                  </ButtonStyle>
+                )}
+              </div>
+            ) : (
+              <div className="mt-auto flex items-center justify-between">
+                <p className="mx-2 text-slate-200  bg-red-600 rounded-lg px-2 my-1 py-1 text-md">
+                  Sold Out
+                </p>
+                <ButtonStyle type="notActive" disabled={true}>
                   ADD TO CART
                 </ButtonStyle>
-              )}
-            </div>
-          ) : (
-            <div className="mt-auto flex items-center justify-between">
-              <p className="mx-2 text-slate-200  bg-red-600 rounded-lg px-2 my-1 py-1 text-md">
-                Sold Out
-              </p>
-              <ButtonStyle type="notActive" disabled={true}>
-                ADD TO CART
-              </ButtonStyle>
-            </div>
-          )}
+              </div>
+            )}
+          </div>
         </li>
       </div>
     </>
