@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import SearchOrder from "../features/order/SearchOrder";
+//import SearchOrder from "../features/order/SearchOrder";
 //import UserName from "../features/user/UserName";
 import LogOut from "../features/user/Authentication/LogOut";
 import { useAppSelector } from "../store";
@@ -15,7 +15,7 @@ function Header() {
           Fast React Pizza Co.
         </Link>
 
-        <SearchOrder />
+        {/* <SearchOrder /> */}
       </div>
       <div className="flex  justify-end gap-6 ">
         {status ? <LogOut /> : <BackHome />}
