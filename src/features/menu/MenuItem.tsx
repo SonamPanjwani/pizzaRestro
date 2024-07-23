@@ -11,9 +11,9 @@ import { supabase } from "../../services/client";
 
 function MenuItem({ pizza }: { pizza: pizzaProp }) {
   const dispatch = useDispatch();
-  const cart = useSelector((state: RootState) => state.cart.cart.flat());
+  // const cart = useSelector((state: RootState) => state.cart.cart.flat());
 
-  console.log(cart);
+  // console.log(cart);
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
   const currentQuantity = useSelector((state: RootState) =>
     getElementById(state, id)
@@ -30,9 +30,9 @@ function MenuItem({ pizza }: { pizza: pizzaProp }) {
       totalPrice: unitPrice * 1,
       image_url: imageUrl,
     };
-    console.log(newItem);
-    const qty = newItem.quantity;
-    console.log(qty);
+    //console.log(newItem);
+    //const qty = newItem.quantity;
+    //console.log(qty);
     dispatch(addItem(newItem));
 
     try {

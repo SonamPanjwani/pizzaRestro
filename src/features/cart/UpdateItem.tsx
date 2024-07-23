@@ -13,7 +13,7 @@ function UpdateItem({ pizzaID, qty, unitPrice }: pizzaIDtype) {
   const dispatch = useDispatch();
 
   async function handleUpdateCartInc() {
-    console.log("function called");
+    // console.log("function called");
     dispatch(increaseItemQty(pizzaID));
     try {
       const newQty = qty + 1;
@@ -28,7 +28,7 @@ function UpdateItem({ pizzaID, qty, unitPrice }: pizzaIDtype) {
     }
   }
   async function handleUpdateCartDec() {
-    console.log("function called");
+    // console.log("function called");
     dispatch(decreaseItemQty(pizzaID));
     try {
       if (qty === 1) {

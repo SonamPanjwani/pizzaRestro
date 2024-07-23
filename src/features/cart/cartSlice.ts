@@ -27,14 +27,14 @@ const cartSlice = createSlice({
       //pizza id
       // console.log(state);
       // console.log(state.cart);
-      console.log(action.payload);
+      // console.log(action.payload);
       const currState = state.cart.flat();
 
-      console.log(currState);
+      //console.log(currState);
       state.cart = currState.filter((item) => {
         return item.pizzaID !== action.payload;
       });
-      console.log(state.cart);
+      // console.log(state.cart);
     },
     increaseItemQty(state, action) {
       const currState = state.cart.flat();
@@ -107,13 +107,13 @@ export const getTotalPrice = (state: RootState) => {
 
 export const getCart = (state: RootState) => {
   const currentCart = state.cart.cart.flat();
-  console.log(currentCart);
+  //console.log(currentCart);
 
   return currentCart;
 };
 export const getElementById = (state: RootState, id: number): number => {
   const currentCart = state.cart.cart.flat();
-  console.log(currentCart);
+  // console.log(currentCart);
   const item = currentCart.find((item) => item.pizzaID === id)?.quantity ?? 0;
   return item;
 };

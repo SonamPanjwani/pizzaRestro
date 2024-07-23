@@ -39,11 +39,11 @@ function LoginLanding() {
     e.preventDefault();
     setErr(null);
 
-    console.log("handlefunction");
+    //console.log("handlefunction");
     if (!email || !password) return;
 
     const response = await login({ email, password });
-    console.log(response);
+    // console.log(response);
     if (response.success) {
       setSuccess(true);
       dispatch(setStatusLogin(true));
@@ -52,7 +52,7 @@ function LoginLanding() {
       console.log(success);
     } else {
       setSuccess(false);
-      setErr("Invalid Email or Password");
+      setErr(response.message || "Invalid Email or Password");
     }
   }
 

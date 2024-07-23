@@ -7,7 +7,7 @@ type itemType = {
   item: item;
 };
 function CartItem(item: itemType) {
-  console.log(item);
+  //console.log(item);
 
   return (
     <>

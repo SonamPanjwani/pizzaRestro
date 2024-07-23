@@ -9,7 +9,7 @@ function Menu() {
   const dispatch = useDispatch();
   dispatch(setDisplay(true));
   const menu = useLoaderData() as pizzaProp[];
-  console.log(menu);
+  //console.log(menu);
   return (
     <>
       <ul

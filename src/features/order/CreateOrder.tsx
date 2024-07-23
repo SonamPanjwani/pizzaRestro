@@ -15,7 +15,7 @@ interface userDataType {
 }
 function CreateOrder() {
   const cart = useSelector((state: RootState) => state.cart.cart.flat());
-  console.log(cart);
+  // console.log(cart);
   const dispatch = useDispatch();
   dispatch(setDisplay(true));
   const priority = useAppSelector((state) => state.order.priority);
@@ -27,7 +27,7 @@ function CreateOrder() {
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
-    console.log(userId);
+    //console.log(userId);
     async function getUser() {
       const { data, error } = await supabase
         .from("user")
@@ -50,12 +50,12 @@ function CreateOrder() {
 
   if (!cart.length) return <EmptyCart />;
 
-  console.log(userData);
+  //console.log(userData);
 
   // const { UserName, ContactInfo, Address } = userData;
 
   async function handleclick() {
-    console.log("handle click");
+    // console.log("handle click");
 
     try {
       cart.forEach(async (item) => {
@@ -66,7 +66,7 @@ function CreateOrder() {
           quantity: item.quantity,
           totalPrice: item.unitPrice * item.quantity,
         };
-        console.log("Current Cart Item:", currCart);
+        // console.log("Current Cart Item:", currCart);
 
         try {
           const { error } = await supabase.from("Cart").insert(currCart); // Inserting as an array

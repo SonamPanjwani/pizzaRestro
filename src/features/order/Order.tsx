@@ -13,14 +13,14 @@ function Order() {
   dispatch(setDisplay(false));
   const priority = useAppSelector((state) => state.order.priority);
   const status = useAppSelector((state) => state.user.statusLogin);
-  console.log(priority);
+  //console.log(priority);
   useEffect(() => {
     async function getOrder() {
       try {
         const { data, error } = await supabase.from("Cart").select("*");
         setOrderData(data);
 
-        console.log(orderData);
+        // console.log(orderData);
         if (error) throw error;
       } catch (error) {
         console.log("Error fetching ORder", error);

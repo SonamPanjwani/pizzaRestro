@@ -21,7 +21,7 @@ const Cart: React.FC = () => {
     dispatch(priorityOrder(false));
   }, [dispatch]);
 
-  console.log(cart);
+  //console.log(cart);
 
   async function emptyCart() {
     dispatch(clearCart());
