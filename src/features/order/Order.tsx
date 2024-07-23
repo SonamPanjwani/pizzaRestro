@@ -7,7 +7,7 @@ import { item } from "../../utilities/Types";
 
 function Order() {
   const dispatch = useDispatch();
-  const [orderData, setOrderData] = useState([]);
+  const [orderData, setOrderData] = useState<any>([]);
 
   dispatch(setDisplay(false));
   const priority = useAppSelector((state) => state.order.priority);

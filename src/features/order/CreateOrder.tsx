@@ -8,7 +8,11 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setDisplay } from "../user/userSlice";
 import { priorityOrder } from "./orderSlice";
-
+interface userDataType {
+  UserName: string;
+  ContactInfo: string;
+  Address: string;
+}
 function CreateOrder() {
   const cart = useSelector((state: RootState) => state.cart.cart.flat());
   console.log(cart);
@@ -19,7 +23,7 @@ function CreateOrder() {
   const status = useAppSelector((state) => state.user.statusLogin);
   const [dataSuccess, setDatasuccess] = useState<boolean>(false);
 
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState<userDataType>();
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -47,7 +51,8 @@ function CreateOrder() {
   if (!cart.length) return <EmptyCart />;
 
   console.log(userData);
-  const { UserName, ContactInfo, Address } = userData;
+
+  // const { UserName, ContactInfo, Address } = userData;
 
   async function handleclick() {
     console.log("handle click");
@@ -99,7 +104,9 @@ function CreateOrder() {
               className="input grow  text-stone-900 capitalize"
               type="text"
               name="Customer"
-              defaultValue={dataSuccess && status ? UserName : ""}
+              defaultValue={
+                dataSuccess && status && userData ? userData.UserName : ""
+              }
               required
             />
           </div>
@@ -112,7 +119,9 @@ function CreateOrder() {
                 className="input w-full  text-stone-900 capitalize"
                 type="tel"
                 name="Phone"
-                defaultValue={dataSuccess && status ? ContactInfo : ""}
+                defaultValue={
+                  dataSuccess && status && userData ? userData.ContactInfo : ""
+                }
                 required
               />
             </div>
@@ -127,7 +136,9 @@ function CreateOrder() {
                 className="input w-full  text-stone-900 capitalize"
                 type="text"
                 name="Address"
-                defaultValue={dataSuccess && status ? Address : ""}
+                defaultValue={
+                  dataSuccess && status && userData ? userData.Address : ""
+                }
                 required
               />
             </div>
