@@ -80,7 +80,7 @@ function SignUp() {
   }
 
   return (
-    <div className="px-4 py-5 mt-20 bg-yellow-200 bg-opacity-35">
+    <div className="px-4 py-5 mt-20 bg-yellow-200 bg-opacity-35 rounded-lg">
       <h2 className="text-[35px]  text-stone-900 font-semibold mb-8">
         New Customer Registeration
       </h2>

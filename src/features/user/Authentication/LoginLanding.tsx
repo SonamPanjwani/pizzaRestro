@@ -58,7 +58,7 @@ function LoginLanding() {
 
   return (
     <>
-      <div className="px-4 py-5 mt-20 bg-yellow-200 bg-opacity-35 text-center text-stone-800 font-bold">
+      <div className="px-4 py-5 mt-20 bg-yellow-200 bg-opacity-35 rounded-lg text-center text-stone-800 font-bold">
         <div className="p-4">
           <p className="tracking-wide   text-center  text-2xl">
             Already a Customer ??? <br></br> Log in to your Account to get
