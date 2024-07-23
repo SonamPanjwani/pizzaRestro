@@ -182,9 +182,11 @@ function SignUp() {
             name="passwordConfirm"
             required
           />
-          <span className="bg-red-100 bg-opacity-35 rounded-xl text-red-900 text-lg  font-semibold px-3 py-1">
-            {error}
-          </span>
+          {error && (
+            <span className="bg-red-100 bg-opacity-35 rounded-xl text-red-900 text-lg  font-semibold px-3 py-1">
+              {error}
+            </span>
+          )}
         </div>
         <div className="flex flex-row items-center text-center gap-3">
           <ButtonStyle disabled={isLoadingAddress} type="primary">

@@ -50,7 +50,7 @@ const Cart: React.FC = () => {
             Order pizzas
           </ButtonStyle>
 
-          <ButtonStyle type="secondary" onClick={emptyCart}>
+          <ButtonStyle type="primary" onClick={emptyCart}>
             Clear Cart
           </ButtonStyle>
         </div>

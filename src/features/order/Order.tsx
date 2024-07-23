@@ -46,7 +46,7 @@ function Order() {
   }, 0);
 
   return (
-    <div className="px-4 py-6  space-y-8 mt-20 bg-yellow-200 bg-opacity-35">
+    <div className="px-4 py-6  rounded-lg space-y-8 mt-20 bg-yellow-200 bg-opacity-35">
       <div>
         <div className="flex items-center justify-between text-stone-900  ">
           <h2 className="text-3xl text-stone-900 font-semibold underline">
@@ -83,7 +83,7 @@ function Order() {
             </li>
           ))}
         </div>
-        <div className="space-y-2  bg-yellow-200 bg-opacity-30 px-6 py-5 text-lg font-medium text-stone-800">
+        <div className="space-y-2 rounded-lg  bg-yellow-200 bg-opacity-30 px-6 py-5 text-lg font-medium text-stone-800 ">
           <p>Price Pizza: ₹ {total}</p>
           {status && (
             <p>

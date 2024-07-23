@@ -5,7 +5,7 @@ import { updateName } from "./userSlice";
 import { useNavigate } from "react-router-dom";
 
 function CreateUser() {
-  const [userName, setuserName] = useState<string>(" ");
+  const [userName, setuserName] = useState<string>("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -20,19 +20,19 @@ function CreateUser() {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <p className="mb-4 font-semibold text-2xl text-stone-100 md:text-base">
+        <p className="mb-4  font-semibold text-2xl text-stone-100 md:text-base">
           Hie👋, Welcome!! Please share your name:
         </p>
         <input
           className="input mb-8 w-72 text-stone-900"
+          placeholder="Your Full Name"
           type="text"
-          placeholder=" Your Full Name"
           value={userName}
           onChange={(e) => {
             setuserName(e.target.value);
           }}
         />
-        {userName !== " " && (
+        {userName !== "" && (
           <div>
             <ButtonStyle type="primary">Start Ordering</ButtonStyle>
           </div>

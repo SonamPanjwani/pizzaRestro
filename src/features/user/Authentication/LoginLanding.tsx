@@ -60,13 +60,13 @@ function LoginLanding() {
     <>
       <div className="px-4 py-5 mt-20 bg-yellow-200 bg-opacity-35 text-center text-stone-800 font-bold">
         <div className="p-4">
-          <p className="tracking-wide   text-center underline text-2xl">
+          <p className="tracking-wide   text-center  text-2xl">
             Already a Customer ??? <br></br> Log in to your Account to get
             special offers
           </p>
           <form onSubmit={handleSubmit}>
             <div className="flex gap-1 mt-5">
-              <label className="sm:basis-40  text-stone-900 font-semibold text-lg underline">
+              <label className="sm:basis-40  text-stone-900 font-semibold text-lg ">
                 Email Id
               </label>
 
@@ -79,7 +79,7 @@ function LoginLanding() {
               />
             </div>
             <div className="flex gap-1  mt-5">
-              <label className="sm:basis-40  text-stone-900 font-semibold text-lg underline">
+              <label className="sm:basis-40  text-stone-900 font-semibold text-lg ">
                 Password
               </label>
 
@@ -96,11 +96,13 @@ function LoginLanding() {
             )}
             <ButtonStyle type="small"> Log In </ButtonStyle>
 
-            <p className="text-base mt-3 mb-2">
+            <p className=" flex flex-col gap-2 text-base mt-3 mb-2">
               New to Fast React ?
-              <LinkStyle to="/signup">Click here to Register</LinkStyle>
+              <p>
+                <LinkStyle to="/signup">Click here to Register</LinkStyle>
+              </p>
             </p>
-            <p className="text-base mt-3 mb-2">
+            <p className=" flex flex-col gap-2 text-base mt-3 mb-2">
               {"OR"}
               <LinkStyle to="/menu"> Continue Without SignUp </LinkStyle>
             </p>
