@@ -27,7 +27,7 @@ function Order() {
       }
     }
     getOrder();
-  }, [orderData]);
+  }, []);
 
   let priorityPrice = 0;
   let specialdiscount = 0;
