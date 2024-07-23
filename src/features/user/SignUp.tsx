@@ -149,6 +149,7 @@ function SignUp() {
                 disabled={isLoadingAddress}
                 onClick={(e) => {
                   e.preventDefault();
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   dispatch(fetchAddress() as any);
                 }}
               >

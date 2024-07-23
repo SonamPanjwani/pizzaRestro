@@ -12,6 +12,7 @@ export const fetchAddress = createAsyncThunk<{
   address: string;
 }>("user/fetchAddress", async function () {
   //get the users location
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const positionObj: any = await getPosition();
   const position = {
     latitude: positionObj.coords.latitude,

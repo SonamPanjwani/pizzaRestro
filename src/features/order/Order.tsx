@@ -7,6 +7,7 @@ import { item } from "../../utilities/Types";
 
 function Order() {
   const dispatch = useDispatch();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [orderData, setOrderData] = useState<any>([]);
 
   dispatch(setDisplay(false));
