@@ -31,13 +31,13 @@ function SignUp() {
     console.log(dataObject);
     const { Email, Password, passwordConfirm, Customer, Phone, Address } =
       dataObject;
-    function generateUniqueUserId() {
+    const id = (function generateUniqueUserId() {
       const timestamp = Date.now(); // Current timestamp
       const randomComponent = Math.floor(Math.random() * 10000); // Random component
       return Number(`${timestamp}${randomComponent}`);
-    }
-    const id = generateUniqueUserId();
-
+    })();
+    const userID = id;
+    console.log(userID);
     if (Password !== passwordConfirm) {
       setError("Passwords do not match");
 
@@ -50,7 +50,7 @@ function SignUp() {
         data: {
           Customer,
           contact: Phone,
-          userId: id,
+          userId: userID,
         },
       },
     });
@@ -64,7 +64,7 @@ function SignUp() {
 
     try {
       const { error } = await supabase.from("user").insert({
-        id: id,
+        id: userID,
         UserName: Customer,
         ContactInfo: Phone,
         email: Email,
