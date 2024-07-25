@@ -107,6 +107,7 @@ function CreateOrder() {
               defaultValue={
                 dataSuccess && status && userData ? userData.UserName : ""
               }
+              placeholder="Enter Your Name "
               required
             />
           </div>
@@ -122,6 +123,7 @@ function CreateOrder() {
                 defaultValue={
                   dataSuccess && status && userData ? userData.ContactInfo : ""
                 }
+                placeholder="Enter Contact Info "
                 required
               />
             </div>
@@ -139,6 +141,7 @@ function CreateOrder() {
                 defaultValue={
                   dataSuccess && status && userData ? userData.Address : ""
                 }
+                placeholder="Enter Your Address "
                 required
               />
             </div>

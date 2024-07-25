@@ -4,11 +4,17 @@ import { supabase } from "../../services/client";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../store";
 import { item } from "../../utilities/Types";
+import ButtonStyle from "../../uiComponents/ButtonStyle";
+
+import { clearCart } from "../cart/cartSlice";
+import { priorityOrder } from "./orderSlice";
+import { useNavigate } from "react-router-dom";
 
 function Order() {
   const dispatch = useDispatch();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [orderData, setOrderData] = useState<any>([]);
+  const navigate = useNavigate();
 
   dispatch(setDisplay(false));
   const priority = useAppSelector((state) => state.order.priority);
@@ -44,6 +50,17 @@ function Order() {
   const total = orderData.reduce((acc: number, item: item) => {
     return acc + item.totalPrice;
   }, 0);
+  async function handleClickExit() {
+    try {
+      const response = await supabase.from("Cart").delete().select("*");
+      console.log(response);
+    } catch (error) {
+      console.log("errrr");
+    }
+    navigate("/thankyou");
+    dispatch(clearCart());
+    dispatch(priorityOrder(false));
+  }
 
   return (
     <div className="px-4 py-6  rounded-lg space-y-8 mt-20 bg-yellow-200 bg-opacity-35">
@@ -96,6 +113,11 @@ function Order() {
             Amount to be Paid at the time of delivery: ₹{" "}
             {total + priorityPrice - specialdiscount}
           </p>
+        </div>
+        <div className="flex flex-row justify-end gap-3">
+          <ButtonStyle to="/menu">Order More</ButtonStyle>
+          <ButtonStyle to="/cart">Back To Cart</ButtonStyle>
+          <ButtonStyle onClick={handleClickExit}>Exit</ButtonStyle>
         </div>
       </div>
     </div>

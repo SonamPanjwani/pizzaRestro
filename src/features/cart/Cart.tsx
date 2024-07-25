@@ -43,7 +43,7 @@ const Cart: React.FC = () => {
 
       <div className="flex mt-6 space-x-2 justify-between ">
         <div className="text-stone-900 font-semibold text-xl">
-          Your Total Amount comes to be : ₹ {totalPrice}
+          Your Total Amount comes to : ₹ {totalPrice}
         </div>
         <div className=" flex flex-row gap-2">
           <ButtonStyle to="/order/new" type="primary">
