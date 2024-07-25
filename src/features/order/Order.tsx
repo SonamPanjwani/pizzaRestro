@@ -65,7 +65,7 @@ function Order() {
   return (
     <div className="px-4 py-6  rounded-lg space-y-8 mt-20 bg-yellow-200 bg-opacity-35">
       <div>
-        <div className="flex items-center justify-between text-stone-900  ">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-stone-900  ">
           <h2 className="text-3xl text-stone-900 font-semibold underline">
             Your Order Details
           </h2>

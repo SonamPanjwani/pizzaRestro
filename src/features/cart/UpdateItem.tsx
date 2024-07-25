@@ -53,12 +53,12 @@ function UpdateItem({ pizzaID, qty, unitPrice }: pizzaIDtype) {
   }
 
   return (
-    <div className="flex gap-3 items-center">
+    <div className="flex gap-3 items-center ">
       <ButtonStyle type="round" onClick={handleUpdateCartDec}>
         {" "}
         -{" "}
       </ButtonStyle>
-      <span className="font-semibold text-lg mt-3 mx-2 text-stone-900">
+      <span className="font-semibold text-lg mt-3 mx-2 text-stone-900 ">
         {qty}
       </span>
       <ButtonStyle type="round" onClick={handleUpdateCartInc}>
